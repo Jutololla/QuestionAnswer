@@ -4,6 +4,7 @@ import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
+import Footer from './components/Footer'
 
 import App from './App'
 import rootReducer from './reducers'
@@ -18,6 +19,7 @@ const store = createStore(
 render(
   <Provider store={store}>
     <App dispatch={store.dispatch}/>
+    <Footer/>
   </Provider>,
   document.getElementById('root')
 )

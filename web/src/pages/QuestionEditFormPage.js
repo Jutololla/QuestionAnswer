@@ -1,16 +1,18 @@
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
-import { postQuestion } from '../actions/questionActions'
+import { updateQuestion } from "../actions/questionActions";
 import { connect } from 'react-redux'
 
-const FormPage = ({ dispatch, loading, redirect, userId }) => {
+const QuestionEditFormPage = ({ dispatch, loading, redirect, userId, match }) => {
     const { register, handleSubmit } = useForm();
     const history = useHistory();
 
+    const questionId = match.params.id
     const onSubmit = data => {
         data.userId = userId;
-        dispatch(postQuestion(data));
+        data.id=questionId;
+        dispatch(updateQuestion(data));
     };
 
     useEffect(() => {
@@ -21,7 +23,7 @@ const FormPage = ({ dispatch, loading, redirect, userId }) => {
 
     return (
         <section>
-            <h1>New Question</h1>
+            <h1>Edit Question</h1>
 
             <form onSubmit={handleSubmit(onSubmit)}>
 
@@ -66,4 +68,4 @@ const mapStateToProps = state => ({
     userId: state.auth.uid
 })
 
-export default connect(mapStateToProps)(FormPage)
+export default connect(mapStateToProps)(QuestionEditFormPage)

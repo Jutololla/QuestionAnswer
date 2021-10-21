@@ -17,8 +17,8 @@ import QuestionsPage from './pages/QuestionsPage'
 import QuestionFormPage from './pages/QuestionFormPage'
 import AnswerFormPage from './pages/AnswerFormPage'
 import OwnerQuestionsPage from './pages/OwnerQuestionsPage'
+import QuestionEditFormPage from './pages/QuestionEditFormPage';
 import { useAuthState } from "react-firebase-hooks/auth";
-import Footer from './components/Footer';
 
 firebase.initializeApp({
   apiKey: "AIzaSyCTySyvuIDPg7RWF6ceuuwC2t3BEiAK38o",
@@ -49,6 +49,7 @@ const App = ({ dispatch }) => {
             <Route exact path="/question/:id" component={SingleQuestionPage }  />
             <Route exact path="/list" component={OwnerQuestionsPage} />
             <Route exact path="/answer/:id" component={AnswerFormPage} />
+            <Route exact path="/questionedit/:id" component={QuestionEditFormPage} />
             <Route exact path="/new" component={QuestionFormPage} />
             <Redirect to="/" />
           </Switch>
@@ -66,7 +67,7 @@ const App = ({ dispatch }) => {
           </Switch>
         </>
       }
-      <Footer/>
+      
     </Router>
   )
 }
@@ -93,7 +94,7 @@ function SignOut({ dispatch }) {
       >
         Sign out
       </button>
-      <Footer/>
+      
       </>
     )
   );

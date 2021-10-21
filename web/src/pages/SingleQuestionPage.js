@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-
 import { deleteAnswer, fetchQuestion } from '../actions/questionActions'
 
 import { Question } from '../components/Question'
@@ -8,13 +7,16 @@ import { Answer } from '../components/Answer'
 import { Link } from 'react-router-dom'
 import swal from 'sweetalert'
 
+
+
 const SingleQuestionPage = ({
   match,
   dispatch,
   question,
   hasErrors,
   loading,
-  userId
+  userId,
+  history
 }) => {
   const { id } = match.params
   useEffect(() => {
@@ -38,11 +40,32 @@ const SingleQuestionPage = ({
     })
   }
 
+  const onEdit = (id) => {
+    (question.answers && question.answers.length) &&
+      swal({
+        title: "Editing this question will create a new copy of it, because it already has answers",
+        text: "Confirm if you want clone this question",
+        icon: "warning",
+        buttons: ["Cancel", "Confirm"]
+      })
+      .then((response)=>{        
+        if(response){
+          return history.push('/new/');
+        }
+      })
+
+  }
+
+  
+  
+
   const renderQuestion = () => {
     if (loading.question) return <p>Loading question...</p>
     if (hasErrors.question) return <p>Unable to display question.</p>
 
-    return <Question question={question} />
+    return <>
+      <Question question={question} />
+    </>
   }
 
   const renderAnswers = () => {
@@ -54,13 +77,17 @@ const SingleQuestionPage = ({
   return (
     <section>
       {renderQuestion()}
-      {userId && <Link to={"/answer/" + id} className="button right">
+      {userId && <div><Link to={"/answer/" + id} className="button right">
         Reply
-      </Link>}
+      </Link>
+        {(question.answers && question.answers.length) ? <button className="button right" onClick={onEdit}>Edit</button>
+          : <Link to={"/questionEdit/" + id} className="button right">Edit</Link>}
+      </div>}
 
       <h2>Answers</h2>
       {renderAnswers()}
     </section>
+
   )
 }
 

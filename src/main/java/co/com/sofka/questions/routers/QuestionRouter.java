@@ -37,17 +37,28 @@ public class QuestionRouter {
                         .body(BodyInserters.fromPublisher(
                                 ownerListUseCase.apply(request.pathVariable("userId")),
                                 QuestionDTO.class
-                         ))
+                        ))
         );
     }
 
     @Bean
+    public RouterFunction<ServerResponse> updateQuestion(UpdateUseCase updateUseCase) {
+        return route(
+                PUT("/updatequestion").and(accept(MediaType.APPLICATION_JSON)),
+                request -> request.bodyToMono(QuestionDTO.class)
+                        .flatMap(questionDTO -> updateUseCase.apply(questionDTO)
+                                        .flatMap(result->ServerResponse.ok()
+                                                .contentType(MediaType.APPLICATION_JSON)
+                                                .bodyValue(result))
+        ));
+    }
+
+    @Bean
     public RouterFunction<ServerResponse> create(CreateQuestionUseCase createQuestionUseCase) {
-        Function<QuestionDTO, Mono<ServerResponse>> executor = questionDTO ->  createQuestionUseCase.apply(questionDTO)
+        Function<QuestionDTO, Mono<ServerResponse>> executor = questionDTO -> createQuestionUseCase.apply(questionDTO)
                 .flatMap(result -> ServerResponse.ok()
                         .contentType(MediaType.TEXT_PLAIN)
                         .bodyValue(result));
-
         return route(
                 POST("/create").and(accept(MediaType.APPLICATION_JSON)),
                 request -> request.bodyToMono(QuestionDTO.class).flatMap(executor)
@@ -61,7 +72,7 @@ public class QuestionRouter {
                 request -> ServerResponse.ok()
                         .contentType(MediaType.APPLICATION_JSON)
                         .body(BodyInserters.fromPublisher(getQuestionsUseCase.apply(
-                                request.pathVariable("id")),
+                                        request.pathVariable("id")),
                                 QuestionDTO.class
                         ))
         );
@@ -93,7 +104,7 @@ public class QuestionRouter {
     public RouterFunction<ServerResponse> deleteAnswer(DeleteAnswerUseCase deleteAnswerUseCase) {
         return route(
                 DELETE("/deleteanswer/{id}").and(accept(MediaType.APPLICATION_JSON)),
-                request ->ServerResponse.accepted()
+                request -> ServerResponse.accepted()
                         .contentType(MediaType.APPLICATION_JSON)
                         .body(BodyInserters.fromPublisher((deleteAnswerUseCase.apply(request.pathVariable("id"))), Void.class))
         );

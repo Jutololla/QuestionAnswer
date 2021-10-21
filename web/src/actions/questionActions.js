@@ -138,3 +138,27 @@ export function postAnswer(answer) {
 }
 
 
+
+export function updateQuestion(question) {
+    return async dispatch => {
+        dispatch(loading())
+        try {
+            await fetch(`${URL_BASE}/updatequestion`,
+                {
+                    method: 'PUT',
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(question)
+                }
+            )
+            dispatch(success({redirect: `/question/${question.id}`}));
+        } catch (error) {
+            dispatch(failure())
+        }
+    }
+}
+
+
+

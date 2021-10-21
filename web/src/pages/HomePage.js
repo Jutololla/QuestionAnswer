@@ -11,6 +11,7 @@ const HomePage = ({children}) => (
     <Link to="/questions" className="button">
       View Questions
     </Link>
+    <hr/>
   
   </section>
 )
