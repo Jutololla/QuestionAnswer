@@ -45,7 +45,7 @@ const App = ({ dispatch }) => {
               return <HomePage><SignOut dispatch={dispatch} /></HomePage>
             }} />
             <Route exact path="/questions" component={QuestionsPage} />
-            <Route exact path="/question/:id" component={SingleQuestionPage} />
+            <Route exact path="/question/:id" component={SingleQuestionPage }  />
             <Route exact path="/list" component={OwnerQuestionsPage} />
             <Route exact path="/answer/:id" component={AnswerFormPage} />
             <Route exact path="/new" component={QuestionFormPage} />

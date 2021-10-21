@@ -42,8 +42,8 @@ public class QuestionRouter {
     }
 
     @Bean
-    public RouterFunction<ServerResponse> create(CreateUseCase createUseCase) {
-        Function<QuestionDTO, Mono<ServerResponse>> executor = questionDTO ->  createUseCase.apply(questionDTO)
+    public RouterFunction<ServerResponse> create(CreateQuestionUseCase createQuestionUseCase) {
+        Function<QuestionDTO, Mono<ServerResponse>> executor = questionDTO ->  createQuestionUseCase.apply(questionDTO)
                 .flatMap(result -> ServerResponse.ok()
                         .contentType(MediaType.TEXT_PLAIN)
                         .bodyValue(result));
@@ -55,12 +55,12 @@ public class QuestionRouter {
     }
 
     @Bean
-    public RouterFunction<ServerResponse> get(GetUseCase getUseCase) {
+    public RouterFunction<ServerResponse> get(GetQuestionsUseCase getQuestionsUseCase) {
         return route(
                 GET("/get/{id}").and(accept(MediaType.APPLICATION_JSON)),
                 request -> ServerResponse.ok()
                         .contentType(MediaType.APPLICATION_JSON)
-                        .body(BodyInserters.fromPublisher(getUseCase.apply(
+                        .body(BodyInserters.fromPublisher(getQuestionsUseCase.apply(
                                 request.pathVariable("id")),
                                 QuestionDTO.class
                         ))
@@ -80,12 +80,22 @@ public class QuestionRouter {
     }
 
     @Bean
-    public RouterFunction<ServerResponse> delete(DeleteUseCase deleteUseCase) {
+    public RouterFunction<ServerResponse> delete(DeleteQuestionUseCase deleteQuestionUseCase) {
         return route(
                 DELETE("/delete/{id}").and(accept(MediaType.APPLICATION_JSON)),
                 request -> ServerResponse.accepted()
                         .contentType(MediaType.APPLICATION_JSON)
-                        .body(BodyInserters.fromPublisher(deleteUseCase.apply(request.pathVariable("id")), Void.class))
+                        .body(BodyInserters.fromPublisher(deleteQuestionUseCase.apply(request.pathVariable("id")), Void.class))
+        );
+    }
+
+    @Bean
+    public RouterFunction<ServerResponse> deleteAnswer(DeleteAnswerUseCase deleteAnswerUseCase) {
+        return route(
+                DELETE("/deleteanswer/{id}").and(accept(MediaType.APPLICATION_JSON)),
+                request ->ServerResponse.accepted()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(BodyInserters.fromPublisher((deleteAnswerUseCase.apply(request.pathVariable("id"))), Void.class))
         );
     }
 }

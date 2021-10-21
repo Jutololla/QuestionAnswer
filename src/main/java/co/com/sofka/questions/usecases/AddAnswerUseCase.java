@@ -14,17 +14,17 @@ import java.util.Objects;
 public class AddAnswerUseCase implements SaveAnswer {
     private final AnswerRepository answerRepository;
     private final MapperUtils mapperUtils;
-    private final GetUseCase getUseCase;
+    private final GetQuestionsUseCase getQuestionsUseCase;
 
-    public AddAnswerUseCase(MapperUtils mapperUtils, GetUseCase getUseCase, AnswerRepository answerRepository) {
+    public AddAnswerUseCase(MapperUtils mapperUtils, GetQuestionsUseCase getQuestionsUseCase, AnswerRepository answerRepository) {
         this.answerRepository = answerRepository;
-        this.getUseCase = getUseCase;
+        this.getQuestionsUseCase = getQuestionsUseCase;
         this.mapperUtils = mapperUtils;
     }
 
     public Mono<QuestionDTO> apply(AnswerDTO answerDTO) {
         Objects.requireNonNull(answerDTO.getQuestionId(), "Id of the answer is required");
-        return getUseCase.apply(answerDTO.getQuestionId()).flatMap(question ->
+        return getQuestionsUseCase.apply(answerDTO.getQuestionId()).flatMap(question ->
                 answerRepository.save(mapperUtils.mapperToAnswer().apply(answerDTO))
                         .map(answer -> {
                             question.getAnswers().add(answerDTO);

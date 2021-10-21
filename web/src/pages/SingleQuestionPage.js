@@ -29,7 +29,7 @@ const SingleQuestionPage = ({
 
   const renderAnswers = () => {
     return (question.answers && question.answers.length) ? question.answers.map(answer => (
-      <Answer key={answer.id} answer={answer} />
+      <Answer key={answer.id} answer={answer} uid={userId} dispatch={dispatch}/>
     )) : <p>Empty answer!</p>;
   }
 

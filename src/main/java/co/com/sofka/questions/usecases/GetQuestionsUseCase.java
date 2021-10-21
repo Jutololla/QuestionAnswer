@@ -12,12 +12,12 @@ import java.util.function.Function;
 
 @Service
 @Validated
-public class GetUseCase implements Function<String, Mono<QuestionDTO>> {
+public class GetQuestionsUseCase implements Function<String, Mono<QuestionDTO>> {
     private final QuestionRepository questionRepository;
     private final AnswerRepository answerRepository;
     private final MapperUtils mapperUtils;
 
-    public GetUseCase(MapperUtils mapperUtils, QuestionRepository questionRepository, AnswerRepository answerRepository) {
+    public GetQuestionsUseCase(MapperUtils mapperUtils, QuestionRepository questionRepository, AnswerRepository answerRepository) {
         this.questionRepository = questionRepository;
         this.answerRepository = answerRepository;
         this.mapperUtils = mapperUtils;

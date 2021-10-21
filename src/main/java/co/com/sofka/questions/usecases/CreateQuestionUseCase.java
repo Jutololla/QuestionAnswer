@@ -9,11 +9,11 @@ import reactor.core.publisher.Mono;
 
 @Service
 @Validated
-public class CreateUseCase implements SaveQuestion {
+public class CreateQuestionUseCase implements SaveQuestion {
     private final QuestionRepository questionRepository;
     private final MapperUtils mapperUtils;
 
-    public CreateUseCase(MapperUtils mapperUtils, QuestionRepository questionRepository) {
+    public CreateQuestionUseCase(MapperUtils mapperUtils, QuestionRepository questionRepository) {
         this.questionRepository = questionRepository;
         this.mapperUtils = mapperUtils;
     }

@@ -13,6 +13,8 @@ public class AnswerDTO {
     @NotBlank
     private String answer;
 
+    private String id;
+
     private Integer position;
 
 
@@ -20,10 +22,11 @@ public class AnswerDTO {
 
     }
 
-    public AnswerDTO(@NotBlank String questionId, @NotBlank String userId, @NotBlank String answer) {
+    public AnswerDTO(@NotBlank String questionId, @NotBlank String userId, @NotBlank String answer, @NotBlank String id) {
         this.userId = userId;
         this.questionId = questionId;
         this.answer = answer;
+        this.id=id;
     }
 
     public Integer getPosition() {
@@ -57,6 +60,14 @@ public class AnswerDTO {
 
     public void setAnswer(String answer) {
         this.answer = answer;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     @Override
