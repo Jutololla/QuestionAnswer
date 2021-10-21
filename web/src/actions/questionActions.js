@@ -109,7 +109,7 @@ export function deleteAnswer(id) {
                     }
                 }
             )
-            dispatch(success({redirect: `/list`}));
+            dispatch(success({redirect: `/question/${id}`}));
         } catch (error) {
             dispatch(failure())
         }
