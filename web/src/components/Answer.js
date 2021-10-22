@@ -5,7 +5,7 @@ export const Answer = ({ answer, uid, onDelete, onPlus, onSustract }) => {
 
  
 return <aside className="answer">
-  <p>{answer.answer}</p>
+  <div dangerouslySetInnerHTML={{__html:answer.answer}} />
   {uid === answer.userId && <Button
     key={answer.id}
     onClick={() => onDelete(answer.id)}

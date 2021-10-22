@@ -1,23 +1,44 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import {  fetchQuestion, postAnswer, sendMail } from '../actions/questionActions'
 import { connect } from 'react-redux'
 import { Question } from '../components/Question'
+import { Input } from "../components/Input";
 
 const FormPage = ({ dispatch, loading, redirect, match,hasErrors, question, userId, userEmail }) => {
+    const [content, setContent]=useState('');
     const { register, handleSubmit } = useForm();
     const { id } = match.params
     const history = useHistory();
     const mail =({});
     
+ const validateInput = ({answer}) => {
+        if(answer.length && answer.length <=1000) {
+            return true;
+        }
+        return false;
+    }
 
-    const onSubmit = data => {
+    const onSubmit = e => {
+        e.preventDefault();
+
+        const data = {
+            userId,
+            questionId:id,
+            answer:content
+        }
+        if(validateInput(data)){
+            dispatch(postAnswer(data));
+            prepareMail({userEmail,question,mail});
+        } 
+    }
+   /* const onSubmit = data => {
         data.userId =  userId;
         data.questionId = id;
         dispatch(postAnswer(data));
         prepareMail({userEmail,question,mail});
-    };
+    };*/
         
     const prepareMail = ({userEmail,question,mail}) =>{
         mail.toEmail=userEmail;
@@ -53,11 +74,11 @@ const FormPage = ({ dispatch, loading, redirect, match,hasErrors, question, user
             <form question={question} 
             userEmail={userEmail}
             mail={mail}
-            onSubmit={handleSubmit(onSubmit)}>
+            onSubmit={onSubmit}>
                 <div>
-                    <label for="answer">Answer</label>
-                    <textarea id="answer" {...register("answer", { required: true, maxLength: 300 })} />
-                </div>
+                   <Input id="answer" setContent={setContent}/>
+
+                   </div>
                 <button type="submit" className="button" disabled={loading} >{
                     loading ? "Saving ...." : "Saved"
                 }</button>

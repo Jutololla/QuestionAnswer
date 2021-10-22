@@ -1,17 +1,40 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import { postQuestion } from '../actions/questionActions'
 import { connect } from 'react-redux'
+import { Input } from "../components/Input";
 
 const FormPage = ({ dispatch, loading, redirect, userId }) => {
+    const [formState, setformState] = useState({
+        type:'OPEN (LONG OPEN BOX)',
+        category:'TECHNOLOGY AND COMPUTER'
+    })
+    const validateInput = ({question}) => {
+        if(question.length && question.length <=500) {
+            return true;
+        }
+        return false;
+    }
+    const [content, setContent] = useState('');
+
     const { register, handleSubmit } = useForm();
     const history = useHistory();
 
-    const onSubmit = data => {
+   /* const onSubmit = data => {
         data.userId = userId;
         dispatch(postQuestion(data));
-    };
+    };*/
+
+    const onSubmit = e => {
+        e.preventDefault();
+        const data = {...formState,
+            userId,
+            question:content
+        }
+        console.log(data);
+        validateInput(data) && dispatch(postQuestion(data));
+    }
 
     useEffect(() => {
         if (redirect) {
@@ -19,15 +42,22 @@ const FormPage = ({ dispatch, loading, redirect, userId }) => {
         }
     }, [redirect, history])
 
+    const handleInputChange = ({target}) => {
+        setformState({...formState,
+            [target.name]:target.value
+        });
+    }
+
+
     return (
         <section>
             <h1>New Question</h1>
 
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={onSubmit}>
 
                 <div>
                     <label for="type">Type</label>
-                    <select {...register("type")} id="">
+                    <select name="type" onChange={handleInputChange} id="type">
                         <option value="OPEN (LONG OPEN BOX)">OPEN (LONG OPEN BOX)</option>
                         <option value="OPINION (SHORT OPEN BOX)">OPINION (SHORT OPEN BOX)</option>
                         <option value="WITH RESULT (OPEN BOX WITH LINK)">WITH RESULT (OPEN BOX WITH LINK)</option>
@@ -36,7 +66,7 @@ const FormPage = ({ dispatch, loading, redirect, userId }) => {
                 </div>
                 <div>
                     <label for="category">Category</label>
-                    <select {...register("category")} id="category">
+                    <select name="category"onChange={handleInputChange} id="category">
                         <option value="TECHNOLOGY AND COMPUTER">TECHNOLOGY AND COMPUTER</option>
                         <option value="SCIENCES">SCIENCES</option>
                         <option value="SOFTWARE DEVELOPMENT">SOFTWARE DEVELOPMENT</option>
@@ -48,7 +78,7 @@ const FormPage = ({ dispatch, loading, redirect, userId }) => {
 
                 <div>
                     <label for="question">Question</label>
-                    <textarea id="question" {...register("question", { required: true, maxLength: 300 })} />
+                    <Input id="question" setContent={setContent}/>
                 </div>
                 <button type="submit" className="button" disabled={loading} >{
                     loading ? "Saving ...." : "Save"
