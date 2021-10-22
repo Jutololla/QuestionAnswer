@@ -19,7 +19,12 @@ import AnswerFormPage from './pages/AnswerFormPage'
 import OwnerQuestionsPage from './pages/OwnerQuestionsPage'
 import QuestionEditFormPage from './pages/QuestionEditFormPage';
 import { useAuthState } from "react-firebase-hooks/auth";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyBes3j4uHIOmwpWz_YdCBb04i_TpDOoHM0",
   authDomain: "questionanswer-e95e5.firebaseapp.com",
@@ -29,6 +34,10 @@ const firebaseConfig = {
   appId: "1:922604461550:web:39037df914c710a73f02ff",
   measurementId: "G-LJC5TFQ4HE"
 };
+
+
+
+
 
 firebase.initializeApp({
   apiKey: "AIzaSyCTySyvuIDPg7RWF6ceuuwC2t3BEiAK38o",
