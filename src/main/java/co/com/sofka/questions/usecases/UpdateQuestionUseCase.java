@@ -12,11 +12,11 @@ import java.util.Objects;
 
 @Service
 @Validated
-public class UpdateUseCase implements SaveQuestion {
+public class UpdateQuestionUseCase implements SaveQuestion {
     private final QuestionRepository questionRepository;
     private final MapperUtils mapperUtils;
 
-    public UpdateUseCase(MapperUtils mapperUtils, QuestionRepository questionRepository) {
+    public UpdateQuestionUseCase(MapperUtils mapperUtils, QuestionRepository questionRepository) {
         this.questionRepository = questionRepository;
         this.mapperUtils = mapperUtils;
     }

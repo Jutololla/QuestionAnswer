@@ -42,15 +42,27 @@ public class QuestionRouter {
     }
 
     @Bean
-    public RouterFunction<ServerResponse> updateQuestion(UpdateUseCase updateUseCase) {
+    public RouterFunction<ServerResponse> updateQuestion(UpdateQuestionUseCase updateQuestionUseCase) {
         return route(
                 PUT("/updatequestion").and(accept(MediaType.APPLICATION_JSON)),
                 request -> request.bodyToMono(QuestionDTO.class)
-                        .flatMap(questionDTO -> updateUseCase.apply(questionDTO)
+                        .flatMap(questionDTO -> updateQuestionUseCase.apply(questionDTO)
                                         .flatMap(result->ServerResponse.ok()
                                                 .contentType(MediaType.APPLICATION_JSON)
                                                 .bodyValue(result))
         ));
+    }
+
+    @Bean
+    public RouterFunction<ServerResponse> updateAnswer(UpdateAnswerUseCase updateAnswerUseCase) {
+        return route(
+                PUT("/updateanswer").and(accept(MediaType.APPLICATION_JSON)),
+                request -> request.bodyToMono(AnswerDTO.class)
+                        .flatMap(answerDTO -> updateAnswerUseCase.apply(answerDTO)
+                                .flatMap(result->ServerResponse.ok()
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .bodyValue(result))
+                        ));
     }
 
     @Bean
