@@ -1,7 +1,7 @@
 import React from 'react'
 import Button from 'emerald-ui/lib/Button';
 
-export const Answer = ({ answer, uid, onDelete }) => {
+export const Answer = ({ answer, uid, onDelete, onPlus, onSustract }) => {
 
  
 return <aside className="answer">
@@ -10,6 +10,8 @@ return <aside className="answer">
     key={answer.id}
     onClick={() => onDelete(answer.id)}
   >Delete</Button>}
+   <Button onClick={() => onPlus(answer.id)}>+1</Button>
+  <Button onClick={() => onSustract(answer.id)}>-1</Button>
 
 
 </aside>

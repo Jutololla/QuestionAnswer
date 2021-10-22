@@ -56,6 +56,14 @@ const SingleQuestionPage = ({
 
   }
 
+  const onPlus = (id) =>{
+    console.log("mas uno "+id)
+  }
+
+  const onSustract = (id) =>{
+    console.log("menos uno "+id)
+  }
+
   
   
 
@@ -70,7 +78,8 @@ const SingleQuestionPage = ({
 
   const renderAnswers = () => {
     return (question.answers && question.answers.length) ? question.answers.map(answer => (
-      <Answer key={answer.id} answer={answer} uid={userId} onDelete={onDelete} />
+      <Answer key={answer.id} answer={answer} uid={userId} onDelete={onDelete}
+      onPlus={onPlus} onSustract={onSustract} />
     )) : <p>Empty answer!</p>;
   }
 
@@ -80,7 +89,8 @@ const SingleQuestionPage = ({
       {userId && <div><Link to={"/answer/" + id} className="button right">
         Reply
       </Link>
-        {(question.answers && question.answers.length) ? <button className="button right" onClick={onEdit}>Edit</button>
+        {(question.answers && question.answers.length) ? 
+        <button className="button right" onClick={onEdit}>Edit</button>
           : <Link to={"/questionEdit/" + id} className="button right">Edit</Link>}
       </div>}
 
