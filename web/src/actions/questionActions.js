@@ -160,5 +160,26 @@ export function updateQuestion(question) {
     }
 }
 
+export function updateAnswer(answer) {
+    return async dispatch => {
+        dispatch(loading())
+        try {
+            await fetch(`${URL_BASE}/updateanswer`,
+                {
+                    method: 'PUT',
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(answer)
+                }
+            )
+            dispatch(success({redirect: `/question/${answer.id}`}));
+        } catch (error) {
+            dispatch(failure())
+        }
+    }
+}
+
 
 

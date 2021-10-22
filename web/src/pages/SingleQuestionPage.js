@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { deleteAnswer, fetchQuestion } from '../actions/questionActions'
-
+import { updateAnswer } from '../actions/questionActions'
 import { Question } from '../components/Question'
 import { Answer } from '../components/Answer'
 import { Link } from 'react-router-dom'
@@ -40,7 +40,7 @@ const SingleQuestionPage = ({
     })
   }
 
-  const onEdit = (id) => {
+  const onEdit = () => {
     (question.answers && question.answers.length) &&
       swal({
         title: "Editing this question will create a new copy of it, because it already has answers",
@@ -56,12 +56,16 @@ const SingleQuestionPage = ({
 
   }
 
-  const onPlus = (id) =>{
-    console.log("mas uno "+id)
+  const onPlus = (answer) =>{
+    answer.position=answer.position+1;
+    console.log(answer)
+    dispatch(updateAnswer(answer))
   }
 
-  const onSustract = (id) =>{
-    console.log("menos uno "+id)
+  const onSustract = (answer) =>{
+    answer.position=answer.position-1;
+    console.log(answer)
+    dispatch(updateAnswer(answer))
   }
 
   
