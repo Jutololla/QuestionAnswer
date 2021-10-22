@@ -6,7 +6,7 @@
     "main": "src/index.js",
     "dependencies": {
         "emerald-ui": "^2.14.3",
-        "firebase": "^8.3.3",
+        "firebase": "^8.10.0",
         "jodit": "^3.8.6",
         "jodit-react": "^1.1.5",
         "react": "16.12.0",
