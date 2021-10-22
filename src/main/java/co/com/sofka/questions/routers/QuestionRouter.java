@@ -1,6 +1,7 @@
 package co.com.sofka.questions.routers;
 
 import co.com.sofka.questions.model.AnswerDTO;
+import co.com.sofka.questions.model.EmailDTO;
 import co.com.sofka.questions.model.QuestionDTO;
 import co.com.sofka.questions.usecases.*;
 import org.springframework.context.annotation.Bean;
@@ -99,6 +100,18 @@ public class QuestionRouter {
                                         .contentType(MediaType.APPLICATION_JSON)
                                         .bodyValue(result))
                         )
+        );
+    }
+
+    @Bean
+    public RouterFunction<ServerResponse> sendEmail(SendEmailUseCase sendEmailUseCase){
+        return route(
+                POST("/sendemail/").and(accept(MediaType.APPLICATION_JSON)),
+                request -> request.bodyToMono(EmailDTO.class)
+                        .flatMap(emailDTO -> sendEmailUseCase.apply(emailDTO))
+                        .flatMap(result->ServerResponse.ok()
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .bodyValue(result))
         );
     }
 

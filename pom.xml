@@ -45,6 +45,11 @@
 			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.simplejavamail</groupId>
+			<artifactId>simple-java-mail</artifactId>
+			<version>6.6.1</version>
+		</dependency>
 	</dependencies>
 
 	<build>

@@ -12,6 +12,7 @@ return <aside className="answer">
   >Delete</Button>}
    <Button onClick={() => onPlus(answer)}>+1</Button>
   <Button onClick={() => onSustract(answer)}>-1</Button>
+  <>   {answer.position}</>
 
 
 </aside>

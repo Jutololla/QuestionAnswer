@@ -81,7 +81,10 @@ const SingleQuestionPage = ({
   }
 
   const renderAnswers = () => {
-    return (question.answers && question.answers.length) ? question.answers.map(answer => (
+    return (question.answers && question.answers.length) ? question.answers
+    .sort(function(a, b){return b.position-a.position})
+    
+    .map(answer => (
       <Answer key={answer.id} answer={answer} uid={userId} onDelete={onDelete}
       onPlus={onPlus} onSustract={onSustract} />
     )) : <p>Empty answer!</p>;
