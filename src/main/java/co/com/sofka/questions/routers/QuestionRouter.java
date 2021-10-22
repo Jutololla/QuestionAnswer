@@ -108,7 +108,7 @@ public class QuestionRouter {
         return route(
                 POST("/sendemail/").and(accept(MediaType.APPLICATION_JSON)),
                 request -> request.bodyToMono(EmailDTO.class)
-                        .flatMap(emailDTO -> sendEmailUseCase.apply(emailDTO))
+                        .flatMap(sendEmailUseCase::apply)
                         .flatMap(result->ServerResponse.ok()
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .bodyValue(result))

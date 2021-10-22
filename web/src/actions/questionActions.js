@@ -137,6 +137,28 @@ export function postAnswer(answer) {
     }
 }
 
+export function sendMail(mail) {
+    console.log("draku")
+    return async dispatch => {
+        dispatch(loading())
+        try {
+            await fetch(`${URL_BASE}/sendemail/`,
+                {
+                    method: 'POST',
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(mail)
+                }
+            )
+            dispatch(success({}));
+        } catch (error) {
+            dispatch(failure())
+        }
+    }
+}
+
 
 
 export function updateQuestion(question) {
