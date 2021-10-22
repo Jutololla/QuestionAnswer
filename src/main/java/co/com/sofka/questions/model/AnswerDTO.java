@@ -6,14 +6,14 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class AnswerDTO {
+
+    private String id;
     @NotBlank(message = "Debe existir el userId para este objeto")
     private String userId;
     @NotBlank
     private String questionId;
     @NotBlank
     private String answer;
-
-    private String id;
 
     private Integer position;
 
@@ -22,21 +22,28 @@ public class AnswerDTO {
 
     }
 
-    public AnswerDTO(@NotBlank String questionId, @NotBlank String userId, @NotBlank String answer, @NotBlank String id) {
+    public AnswerDTO(String id, String userId, String questionId, String answer, Integer position) {
+        this.id = id;
         this.userId = userId;
         this.questionId = questionId;
         this.answer = answer;
-        this.id=id;
-    }
-
-    public Integer getPosition() {
-        return Optional.ofNullable(position).orElse(1);
-    }
-
-    public void setPosition(Integer position) {
         this.position = position;
     }
+//    public AnswerDTO(@NotBlank String questionId, @NotBlank String userId, @NotBlank String answer, @NotBlank String id) {
+//        this.userId = userId;
+//        this.questionId = questionId;
+//        this.answer = answer;
+//        this.id=id;
+//    }
 
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getUserId() {
         return userId;
@@ -62,12 +69,12 @@ public class AnswerDTO {
         this.answer = answer;
     }
 
-    public String getId() {
-        return id;
+    public Integer getPosition() {
+        return position;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setPosition(Integer position) {
+        this.position = position;
     }
 
     @Override

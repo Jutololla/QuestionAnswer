@@ -18,6 +18,7 @@ public class MapperUtils {
             answer.setQuestionId(updateAnswer.getQuestionId());
             answer.setUserId(updateAnswer.getUserId());
             answer.setAnswer(updateAnswer.getAnswer());
+            answer.setId(updateAnswer.getId());
             return answer;
         };
     }
@@ -47,10 +48,11 @@ public class MapperUtils {
 
     public Function<Answer, AnswerDTO> mapEntityToAnswer() {
         return entity -> new AnswerDTO(
-                entity.getQuestionId(),
+                entity.getId(),
                 entity.getUserId(),
+                entity.getQuestionId(),
                 entity.getAnswer(),
-                entity.getId()
+                entity.getPosition()
         );
     }
 }

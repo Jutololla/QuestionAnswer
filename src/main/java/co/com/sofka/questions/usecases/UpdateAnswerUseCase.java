@@ -22,7 +22,8 @@ public class UpdateAnswerUseCase {
 
     public Mono<String> apply(AnswerDTO answerDTO){
         Objects.requireNonNull(answerDTO.getId(), "Id of the answer is required");
-        return answerRepository.save(mapperUtils.mapperToAnswer().apply(answerDTO))
+        return answerRepository
+                .save(mapperUtils.mapperToAnswer().apply(answerDTO))
                 .map(Answer::getId);
     }
 }
