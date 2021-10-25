@@ -21,12 +21,13 @@ import QuestionEditFormPage from './pages/QuestionEditFormPage';
 import { useAuthState } from "react-firebase-hooks/auth";
 
 firebase.initializeApp({
-  apiKey: "AIzaSyCTySyvuIDPg7RWF6ceuuwC2t3BEiAK38o",
-  authDomain: "question-app-demo.firebaseapp.com",
-  projectId: "question-app-demo",
-  storageBucket: "question-app-demo.appspot.com",
-  messagingSenderId: "1038673531562",
-  appId: "1:1038673531562:web:da90421f639a3115dcf6d3"
+  apiKey: "AIzaSyBes3j4uHIOmwpWz_YdCBb04i_TpDOoHM0",
+  authDomain: "questionanswer-e95e5.firebaseapp.com",
+  projectId: "questionanswer-e95e5",
+  storageBucket: "questionanswer-e95e5.appspot.com",
+  messagingSenderId: "922604461550",
+  appId: "1:922604461550:web:39037df914c710a73f02ff",
+  measurementId: "G-LJC5TFQ4HE"
 });
 
 const auth = firebase.auth();

@@ -1,6 +1,7 @@
 package co.com.sofka.questions.usecases;
 
 import co.com.sofka.questions.collections.Answer;
+import co.com.sofka.questions.mapper.MapperUtils;
 import co.com.sofka.questions.model.AnswerDTO;
 import co.com.sofka.questions.reposioties.AnswerRepository;
 import org.springframework.stereotype.Service;

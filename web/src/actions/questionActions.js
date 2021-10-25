@@ -1,4 +1,4 @@
-const URL_BASE = 'http://localhost:8080';
+const URL_BASE = 'https://fierce-mesa-37875.herokuapp.com';
 
 export const LOADING = 'LOADING'
 export const LOADED_SUCCESS = 'LOADED_SUCCESS'
