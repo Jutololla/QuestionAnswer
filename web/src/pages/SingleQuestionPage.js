@@ -96,9 +96,17 @@ const SingleQuestionPage = ({
       {userId && <div><Link to={"/answer/" + id} className="button right">
         Reply
       </Link>
-        {(question.answers && question.answers.length) ? 
+      {question.userId==userId&&<div>
+        {
+        (question.answers && question.answers.length) ? 
         <button className="button right" onClick={onEdit}>Edit</button>
-          : <Link to={"/questionEdit/" + id} className="button right">Edit</Link>}
+          : <Link to={"/questionEdit/" + id} className="button right">Edit</Link>
+        }
+        </div>
+}
+          
+          
+      
       </div>}
 
       <h2>Answers</h2>

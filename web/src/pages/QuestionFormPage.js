@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+//import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import { postQuestion } from '../actions/questionActions'
 import { connect } from 'react-redux'
@@ -18,7 +18,7 @@ const FormPage = ({ dispatch, loading, redirect, userId }) => {
     }
     const [content, setContent] = useState('');
 
-    const { register, handleSubmit } = useForm();
+    //const { register, handleSubmit } = useForm();
     const history = useHistory();
 
    /* const onSubmit = data => {

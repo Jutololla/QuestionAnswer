@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+//import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import {  fetchQuestion, postAnswer, sendMail } from '../actions/questionActions'
 import { connect } from 'react-redux'
@@ -8,7 +8,7 @@ import { Input } from "../components/Input";
 
 const FormPage = ({ dispatch, loading, redirect, match,hasErrors, question, userId, userEmail, pathname }) => {
     const [content, setContent]=useState('');
-    const { register, handleSubmit } = useForm();
+    //const { register, handleSubmit } = useForm();
     const { id } = match.params
     const history = useHistory();
     const mail =({});
