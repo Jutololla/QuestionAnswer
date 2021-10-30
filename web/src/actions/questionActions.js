@@ -1,4 +1,5 @@
-const URL_BASE = 'https://fierce-mesa-37875.herokuapp.com';
+// const URL_BASE = 'https://fierce-mesa-37875.herokuapp.com';
+const URL_BASE = 'http://localhost:8080';
 
 export const LOADING = 'LOADING'
 export const LOADED_SUCCESS = 'LOADED_SUCCESS'
@@ -137,11 +138,12 @@ export function postAnswer(answer) {
     }
 }
 
-export function sendMail(mail) {
-    console.log("draku")
+export function sendMail(mail,answer) {
     return async dispatch => {
         dispatch(loading())
         try {
+            mail.questionPath=`/question/${answer.questionId}`;
+            console.log(mail)
             await fetch(`${URL_BASE}/sendemail/`,
                 {
                     method: 'POST',

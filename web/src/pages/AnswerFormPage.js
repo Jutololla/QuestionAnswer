@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { Question } from '../components/Question'
 import { Input } from "../components/Input";
 
-const FormPage = ({ dispatch, loading, redirect, match,hasErrors, question, userId, userEmail }) => {
+const FormPage = ({ dispatch, loading, redirect, match,hasErrors, question, userId, userEmail, pathname }) => {
     const [content, setContent]=useState('');
     const { register, handleSubmit } = useForm();
     const { id } = match.params
@@ -30,17 +30,17 @@ const FormPage = ({ dispatch, loading, redirect, match,hasErrors, question, user
         }
         if(validateInput(data)){
             dispatch(postAnswer(data));
-            prepareMail({userEmail,question,mail});
+            prepareMail({userEmail,question,mail,data});
         } 
     }
   
         
-    const prepareMail = ({userEmail,question,mail}) =>{
+    const prepareMail = ({userEmail,question,mail,data}) =>{
         mail.toEmail=userEmail;
         mail.toName="defaultUserName";
         mail.question=question.question;
         console.log({mail})
-       dispatch(sendMail(mail));
+       dispatch(sendMail(mail,data));
     }
 
     useEffect(() => {
@@ -75,7 +75,7 @@ const FormPage = ({ dispatch, loading, redirect, match,hasErrors, question, user
 
                    </div>
                 <button type="submit" className="button" disabled={loading} >{
-                    loading ? "Saving ...." : "Saved"
+                    loading ? "Saving ...." : "Save"
                 }</button>
             </form>
         </section>
@@ -89,7 +89,8 @@ const mapStateToProps = state => ({
     question: state.question.question,
     hasErrors: state.question.hasErrors,
     userId: state.auth.uid,
-    userEmail: state.auth.email
+    userEmail: state.auth.email,
+    pathname:state.pathname
 })
 
 export default connect(mapStateToProps)(FormPage)

@@ -6,11 +6,11 @@ public class EmailDTO {
     private String question;
     private String questionLink;
 
-    public EmailDTO(String toEmail, String toName, String question, String questionLink) {
+    public EmailDTO(String toEmail, String toName, String question, String questionPath) {
         this.toEmail = toEmail;
         this.toName = toName;
         this.question = question;
-        this.questionLink = questionLink;
+        this.questionLink = questionPath;
     }
 
     public String getToEmail() {
