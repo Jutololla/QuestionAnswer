@@ -14,11 +14,7 @@ public class SendEmailUseCase {
 
     public Mono<String> apply(EmailDTO emailDTO){
         EmailController email = new EmailController();
-        try {
-            email.sendMail(emailDTO.getToEmail(),emailDTO.getToName(),emailDTO.getQuestion());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        email.sendMail(emailDTO.getToEmail(),emailDTO.getToName(),emailDTO.getQuestion(),emailDTO.getQuestionLink());
         return Mono.just("mail sent");
     }
 

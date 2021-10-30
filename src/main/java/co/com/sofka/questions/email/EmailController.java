@@ -17,9 +17,11 @@ import java.nio.charset.StandardCharsets;
 
 public class EmailController {
 
-    public void sendMail(String toEmail, String toName, String question) throws IOException {
+    public String sendMail(String toEmail, String toName, String question, String questionLink){
         String text =readFileToString("email.html");
         text=text.replace("QUESTION",question);
+        text=text.replace("LINKTOWEBPAGE",questionLink);
+
 
         Email email = EmailBuilder.startingBlank()
                 .from("Testor Aurelio", "testingservice151526@outlook.com")
@@ -37,6 +39,7 @@ public class EmailController {
                 .buildMailer();
 
         mailer.sendMail(email);
+        return "OK";
     }
 
     public static String readFileToString(String path) {

@@ -2,19 +2,14 @@ package co.com.sofka.questions.usecases;
 
 import co.com.sofka.questions.email.EmailController;
 import co.com.sofka.questions.model.EmailDTO;
-import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-import org.mockito.stubbing.Answer;
-import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
 import java.io.IOException;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 class SendEmailUseCaseTest {
@@ -23,7 +18,8 @@ class SendEmailUseCaseTest {
 
     @BeforeEach
     public void setup(){
-        email = mock(EmailController.class);
+
+
         sendEmailUseCase = new SendEmailUseCase();
 
     }
@@ -31,9 +27,10 @@ class SendEmailUseCaseTest {
     @Test
     void sendMailTest() throws IOException {
         EmailDTO emailDTO = new EmailDTO("testingservice151526@outlook.com",
-                "Peblito", "Ejemplo pregunta");
+                "Peblito", "Ejemplo pregunta", "facebook.com");
 
-        when(sendEmailUseCase.apply(emailDTO)).thenReturn(Mono.just("mail sent"));
+        when(email.sendMail(any(),any(),any(),any())).thenReturn("OK test");
+
 
         StepVerifier.create(sendEmailUseCase.apply(emailDTO)).expectNextMatches(
                 string->{
