@@ -88,18 +88,15 @@ public class PlusAnswerVoteUseCase {
 //                    return updateAnswerUseCase.apply(mapperUtils.mapEntityToAnswer().apply(originalAnswer));});
 
 
-        deleteVoteUseCase.apply(answerDTO.getUserId());
+      //  deleteVoteUseCase.apply(answerDTO.getUserId());
 
-        getAnswerUseCase.apply(answerDTO.getId())
+       return getAnswerUseCase.apply(answerDTO.getId())
                 .flatMap((originalAnswerDTO) ->{
                     answerDTO.addUpVote(answerDTO.getUserId());
                     return answerRepository.save(mapperUtils.mapperToAnswer().apply(answerDTO));})
-                .map(mapperUtils.mapEntityToAnswer()).then();
+                .map(mapperUtils.mapEntityToAnswer()).then(calculateAnswerPositionUseCase.apply(answerDTO));
 
-
-        calculateAnswerPositionUseCase.apply(answerDTO);
-
-        return Mono.empty();
+       // return Mono.empty();
     }
 
     }
