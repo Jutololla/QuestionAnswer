@@ -4,13 +4,20 @@ import co.com.sofka.questions.collections.Answer;
 import co.com.sofka.questions.collections.Question;
 import co.com.sofka.questions.model.AnswerDTO;
 import co.com.sofka.questions.model.QuestionDTO;
+import co.com.sofka.questions.reposioties.AnswerRepository;
+import co.com.sofka.questions.usecases.UpdateAnswerUseCase;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.function.Function;
 
 @Component
 public class MapperUtils {
+
+    @Autowired
+    AnswerRepository answerRepository;
+    UpdateAnswerUseCase updateAnswerUseCase;
 
     public Function<AnswerDTO, Answer> mapperToAnswer() {
 //        return updateAnswer -> {
@@ -67,8 +74,16 @@ public class MapperUtils {
 //                    entity.getPosition()
             BeanUtils.copyProperties(entity, answerDTO);
             return answerDTO;
-        };
+        };}
 
+        public void deletePreviousVote(AnswerDTO answerDTO){
+            answerRepository.findAllByQuestionId(answerDTO.getQuestionId())
+                    .flatMap(originalAnswer -> {
+                        originalAnswer.removeUpVote(answerDTO.getUserId());
+                        originalAnswer.removeDownVote(answerDTO.getUserId());
+                        return updateAnswerUseCase.apply(mapEntityToAnswer().apply(originalAnswer));
+                    });
+        }
     }
 
-}
+

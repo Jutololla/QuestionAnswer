@@ -22,7 +22,7 @@ const SingleQuestionPage = ({
   const { id } = match.params
   useEffect(() => {
     dispatch(fetchQuestion(id))
-  }, [dispatch, id, question.Answer])
+  }, [dispatch, id, question,Answer])
 
   const onDelete = (id) => {
     swal({

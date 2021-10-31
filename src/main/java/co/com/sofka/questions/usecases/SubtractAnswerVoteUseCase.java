@@ -82,13 +82,12 @@ public class SubtractAnswerVoteUseCase {
 ////            .map(AnswerDTO::getQuestionId)
 //            .flatMap(calculateAnswerPositionUseCase);
 //        answerRepository.findAllByQuestionId(answerDTO.getQuestionId())
-//                .map(answer -> {
-//                    answer.removeDownVote(answerDTO.getUserId());
-//                    answer.removeUpVote(answerDTO.getUserId());
-//                return answer;})
-//                .collectList().flatMap(i->{
-//                    return answerRepository.save(i.get(0));
-//                }).then();
+//                .flatMap(originalAnswer -> {
+//                    originalAnswer.removeUpVote(answerDTO.getUserId());
+//                    originalAnswer.removeDownVote(answerDTO.getUserId());
+//                return updateAnswerUseCase.apply(mapperUtils.mapEntityToAnswer().apply(originalAnswer));});
+
+        mapperUtils.deletePreviousVote(answerDTO);
 
 
             return getAnswerUseCase.apply(answerDTO.getId())
@@ -108,6 +107,6 @@ public class SubtractAnswerVoteUseCase {
 
 
 
-    
+
 
 }
