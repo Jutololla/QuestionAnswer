@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { deleteAnswer, fetchQuestion } from '../actions/questionActions'
-import { updateAnswer } from '../actions/questionActions'
+import { plusAnswerVote } from '../actions/questionActions'
+import { subtractAnswerVote } from '../actions/questionActions'
 import { Question } from '../components/Question'
 import { Answer } from '../components/Answer'
 import { Link } from 'react-router-dom'
@@ -21,7 +22,7 @@ const SingleQuestionPage = ({
   const { id } = match.params
   useEffect(() => {
     dispatch(fetchQuestion(id))
-  }, [dispatch, id, question])
+  }, [dispatch, id, question.Answer])
 
   const onDelete = (id) => {
     swal({
@@ -57,15 +58,13 @@ const SingleQuestionPage = ({
   }
 
   const onPlus = (answer) =>{
-    answer.position=answer.position+1;
     console.log(answer)
-    dispatch(updateAnswer(answer))
+    dispatch(plusAnswerVote(answer))
   }
 
-  const onSustract = (answer) =>{
-    answer.position=answer.position-1;
+  const onSubtract = (answer) =>{
     console.log(answer)
-    dispatch(updateAnswer(answer))
+    dispatch(subtractAnswerVote(answer))
   }
 
   
@@ -86,7 +85,7 @@ const SingleQuestionPage = ({
     
     .map(answer => (
       <Answer key={answer.id} answer={answer} uid={userId} onDelete={onDelete}
-      onPlus={onPlus} onSustract={onSustract} />
+      onPlus={onPlus} onSustract={onSubtract} />
     )) : <p>Empty answer!</p>;
   }
 
@@ -96,7 +95,7 @@ const SingleQuestionPage = ({
       {userId && <div><Link to={"/answer/" + id} className="button right">
         Reply
       </Link>
-      {question.userId==userId&&<div>
+      {question.userId===userId&&<div>
         {
         (question.answers && question.answers.length) ? 
         <button className="button right" onClick={onEdit}>Edit</button>

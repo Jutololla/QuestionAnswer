@@ -11,23 +11,18 @@ import java.util.function.Function;
 
 @Service
 @Validated
-public class UpdateAnswerUseCase implements Function<AnswerDTO, Mono<AnswerDTO>> {
+public class GetAnswerUseCase implements Function<String, Mono<AnswerDTO>> {
     private final AnswerRepository answerRepository;
     private final MapperUtils mapperUtils;
-    private final GetAnswerUseCase getAnswerUseCase;
 
-    public UpdateAnswerUseCase(MapperUtils mapperUtils, AnswerRepository answerRepository
-            , GetAnswerUseCase getAnswerUseCase) {
+    public GetAnswerUseCase(AnswerRepository answerRepository, MapperUtils mapperUtils) {
         this.answerRepository = answerRepository;
         this.mapperUtils = mapperUtils;
-        this.getAnswerUseCase = getAnswerUseCase;
     }
 
     @Override
-    public Mono<AnswerDTO> apply(AnswerDTO answerDTO) {
-        return getAnswerUseCase.apply(answerDTO.getId())
-                .flatMap((originalAnswerDTO) ->
-                        answerRepository.save(mapperUtils.mapperToAnswer().apply(answerDTO)))
+    public Mono<AnswerDTO> apply(String answerId){
+        return answerRepository.findById(answerId)
                 .map(mapperUtils.mapEntityToAnswer());
     }
 }

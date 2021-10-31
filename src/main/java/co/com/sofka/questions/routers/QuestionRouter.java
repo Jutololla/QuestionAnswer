@@ -55,11 +55,23 @@ public class QuestionRouter {
     }
 
     @Bean
-    public RouterFunction<ServerResponse> updateAnswer(UpdateAnswerUseCase updateAnswerUseCase) {
+    public RouterFunction<ServerResponse> plusAnswerVote(PlusAnswerVoteUseCase plusAnswerVoteUseCase) {
         return route(
-                PUT("/updateanswer").and(accept(MediaType.APPLICATION_JSON)),
+                PUT("/updateanswervoteplus").and(accept(MediaType.APPLICATION_JSON)),
                 request -> request.bodyToMono(AnswerDTO.class)
-                        .flatMap(answerDTO -> updateAnswerUseCase.apply(answerDTO)
+                        .flatMap(answerDTO -> plusAnswerVoteUseCase.apply(answerDTO)
+                                .flatMap(result->ServerResponse.ok()
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .bodyValue(result))
+                        ));
+    }
+
+    @Bean
+    public RouterFunction<ServerResponse> subtractAnswerVote(SubtractAnswerVoteUseCase subtractAnswerVoteUseCase) {
+        return route(
+                PUT("/updateanswervotesubtract").and(accept(MediaType.APPLICATION_JSON)),
+                request -> request.bodyToMono(AnswerDTO.class)
+                        .flatMap(answerDTO -> subtractAnswerVoteUseCase.apply(answerDTO)
                                 .flatMap(result->ServerResponse.ok()
                                         .contentType(MediaType.APPLICATION_JSON)
                                         .bodyValue(result))
