@@ -1,7 +1,6 @@
 package co.com.sofka.questions.usecases;
 
-import co.com.sofka.questions.reposioties.QuestionRepository;
-import org.junit.jupiter.api.DisplayName;
+import co.com.sofka.questions.repositories.QuestionRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;

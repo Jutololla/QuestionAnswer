@@ -1,19 +1,9 @@
 package co.com.sofka.questions.usecases;
 
-import co.com.sofka.questions.collections.Answer;
-import co.com.sofka.questions.mapper.MapperUtils;
-import co.com.sofka.questions.model.AnswerDTO;
-import co.com.sofka.questions.reposioties.AnswerRepository;
-import co.com.sofka.questions.reposioties.VoteRepository;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import reactor.core.publisher.Mono;
-import reactor.test.StepVerifier;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 @SpringBootTest
 class PlusAnswerVoteUseCaseTest {

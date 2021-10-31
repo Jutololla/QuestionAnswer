@@ -2,8 +2,8 @@ package co.com.sofka.questions.usecases;
 
 import co.com.sofka.questions.mapper.MapperUtils;
 import co.com.sofka.questions.model.AnswerDTO;
-import co.com.sofka.questions.reposioties.AnswerRepository;
-import co.com.sofka.questions.reposioties.VoteRepository;
+import co.com.sofka.questions.repositories.AnswerRepository;
+import co.com.sofka.questions.repositories.VoteRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import reactor.core.publisher.Mono;
@@ -17,15 +17,17 @@ public class PlusAnswerVoteUseCase {
     private final GetAnswerUseCase getAnswerUseCase;
     private final UpdateAnswerUseCase updateAnswerUseCase;
     private final CalculateAnswerPositionUseCase calculateAnswerPositionUseCase;
+    private final DeleteVoteUseCase deleteVoteUseCase;
 
 
-    public PlusAnswerVoteUseCase(AnswerRepository answerRepository, MapperUtils mapperUtils, VoteRepository voteRepository, GetAnswerUseCase getAnswerUseCase, UpdateAnswerUseCase updateAnswerUseCase, CalculateAnswerPositionUseCase calculateAnswerPositionUseCase) {
+    public PlusAnswerVoteUseCase(AnswerRepository answerRepository, MapperUtils mapperUtils, VoteRepository voteRepository, GetAnswerUseCase getAnswerUseCase, UpdateAnswerUseCase updateAnswerUseCase, CalculateAnswerPositionUseCase calculateAnswerPositionUseCase, DeleteVoteUseCase deleteVoteUseCase) {
         this.answerRepository = answerRepository;
         this.mapperUtils = mapperUtils;
         this.voteRepository = voteRepository;
         this.getAnswerUseCase = getAnswerUseCase;
         this.updateAnswerUseCase = updateAnswerUseCase;
         this.calculateAnswerPositionUseCase = calculateAnswerPositionUseCase;
+        this.deleteVoteUseCase = deleteVoteUseCase;
     }
 
     public Mono<Void> apply(AnswerDTO answerDTO) {
@@ -85,16 +87,19 @@ public class PlusAnswerVoteUseCase {
 //                    originalAnswer.removeDownVote(answerDTO.getUserId());
 //                    return updateAnswerUseCase.apply(mapperUtils.mapEntityToAnswer().apply(originalAnswer));});
 
-        mapperUtils.deletePreviousVote(answerDTO);
 
+        deleteVoteUseCase.apply(answerDTO.getUserId());
 
-        return getAnswerUseCase.apply(answerDTO.getId())
+        getAnswerUseCase.apply(answerDTO.getId())
                 .flatMap((originalAnswerDTO) ->{
                     answerDTO.addUpVote(answerDTO.getUserId());
                     return answerRepository.save(mapperUtils.mapperToAnswer().apply(answerDTO));})
                 .map(mapperUtils.mapEntityToAnswer()).then();
 
 
+        calculateAnswerPositionUseCase.apply(answerDTO);
+
+        return Mono.empty();
     }
 
     }

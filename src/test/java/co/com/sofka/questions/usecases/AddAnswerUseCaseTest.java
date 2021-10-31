@@ -5,21 +5,17 @@ import co.com.sofka.questions.collections.Question;
 import co.com.sofka.questions.mapper.MapperUtils;
 import co.com.sofka.questions.model.AnswerDTO;
 import co.com.sofka.questions.model.QuestionDTO;
-import co.com.sofka.questions.reposioties.AnswerRepository;
-import co.com.sofka.questions.reposioties.QuestionRepository;
+import co.com.sofka.questions.repositories.AnswerRepository;
+import co.com.sofka.questions.repositories.QuestionRepository;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.beans.BeanUtils;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
 import static org.mockito.Mockito.*;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(MockitoJUnitRunner.class)
 class AddAnswerUseCaseTest {

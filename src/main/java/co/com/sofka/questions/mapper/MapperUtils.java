@@ -4,7 +4,7 @@ import co.com.sofka.questions.collections.Answer;
 import co.com.sofka.questions.collections.Question;
 import co.com.sofka.questions.model.AnswerDTO;
 import co.com.sofka.questions.model.QuestionDTO;
-import co.com.sofka.questions.reposioties.AnswerRepository;
+import co.com.sofka.questions.repositories.AnswerRepository;
 import co.com.sofka.questions.usecases.UpdateAnswerUseCase;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,14 +76,7 @@ public class MapperUtils {
             return answerDTO;
         };}
 
-        public void deletePreviousVote(AnswerDTO answerDTO){
-            answerRepository.findAllByQuestionId(answerDTO.getQuestionId())
-                    .flatMap(originalAnswer -> {
-                        originalAnswer.removeUpVote(answerDTO.getUserId());
-                        originalAnswer.removeDownVote(answerDTO.getUserId());
-                        return updateAnswerUseCase.apply(mapEntityToAnswer().apply(originalAnswer));
-                    });
-        }
+
     }
 
 
