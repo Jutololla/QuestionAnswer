@@ -55,6 +55,18 @@ public class QuestionRouter {
     }
 
     @Bean
+    public RouterFunction<ServerResponse> updateAnswer(UpdateAnswerUseCase updateAnswerUseCase) {
+        return route(
+                PUT("/updateanswer").and(accept(MediaType.APPLICATION_JSON)),
+                request -> request.bodyToMono(AnswerDTO.class)
+                        .flatMap(answerDTO -> updateAnswerUseCase.apply(answerDTO)
+                                .flatMap(result->ServerResponse.ok()
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .bodyValue(result))
+                        ));
+    }
+
+    @Bean
     public RouterFunction<ServerResponse> plusAnswerVote(PlusAnswerVoteUseCase plusAnswerVoteUseCase) {
         return route(
                 PUT("/updateanswervoteplus").and(accept(MediaType.APPLICATION_JSON)),

@@ -81,22 +81,33 @@ public class SubtractAnswerVoteUseCase {
 //            .flatMap(updateAnswerUseCase)
 ////            .map(AnswerDTO::getQuestionId)
 //            .flatMap(calculateAnswerPositionUseCase);
-        answerRepository.findAllByQuestionId(answerDTO.getQuestionId())
-                .map(answer -> {
-                    answer.removeDownVote(answerDTO.getUserId());
-                    answer.removeUpVote(answerDTO.getUserId());
-                    return updateAnswerUseCase.apply(mapperUtils.mapEntityToAnswer().apply(answer));
-                });
+//        answerRepository.findAllByQuestionId(answerDTO.getQuestionId())
+//                .map(answer -> {
+//                    answer.removeDownVote(answerDTO.getUserId());
+//                    answer.removeUpVote(answerDTO.getUserId());
+//                return answer;})
+//                .collectList().flatMap(i->{
+//                    return answerRepository.save(i.get(0));
+//                }).then();
 
-        getAnswerUseCase.apply(answerDTO.getId())
-                .map(answerDTO1 -> {
-                    answerDTO1.addDownVote(answerDTO1.getUserId());
-                    return updateAnswerUseCase.apply(answerDTO1);
-                }).then();
 
-        
+            return getAnswerUseCase.apply(answerDTO.getId())
+                    .flatMap((originalAnswerDTO) ->{
+                            answerDTO.addDownVote(answerDTO.getUserId());
+                            return answerRepository.save(mapperUtils.mapperToAnswer().apply(answerDTO));})
+                    .map(mapperUtils.mapEntityToAnswer()).then();
+        }
 
-        return Mono.empty();
-    }
+
+//        getAnswerUseCase.apply(answerDTO.getId())
+//                .map(answerDTO1 -> {
+//                    answerDTO1.addDownVote(answerDTO1.getUserId());
+//                    return answerDTO1;
+//                }).then(answerRepository);
+
+
+
+
+    
 
 }

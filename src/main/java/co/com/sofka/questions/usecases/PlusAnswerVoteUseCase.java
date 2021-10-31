@@ -79,20 +79,14 @@ public class PlusAnswerVoteUseCase {
 //            .flatMap(updateAnswerUseCase)
 ////            .map(AnswerDTO::getQuestionId)
 //            .flatMap(calculateAnswerPositionUseCase);
-        answerRepository.findAllByQuestionId(answerDTO.getQuestionId())
-                .map(answer -> {
-                    answer.removeDownVote(answerDTO.getUserId());
-                    answer.removeUpVote(answerDTO.getUserId());
-                    return updateAnswerUseCase.apply(mapperUtils.mapEntityToAnswer().apply(answer));
-                });
 
-        getAnswerUseCase.apply(answerDTO.getId())
-                .map(answerDTO1 -> {
-                    answerDTO1.addUpVote(answerDTO1.getUserId());
-                    return updateAnswerUseCase.apply(answerDTO1);
-                });
 
-        return calculateAnswerPositionUseCase.apply(answerDTO);
+        return getAnswerUseCase.apply(answerDTO.getId())
+                .flatMap((originalAnswerDTO) ->{
+                    answerDTO.addUpVote(answerDTO.getUserId());
+                    return answerRepository.save(mapperUtils.mapperToAnswer().apply(answerDTO));})
+                .map(mapperUtils.mapEntityToAnswer()).then();
+
 
     }
 

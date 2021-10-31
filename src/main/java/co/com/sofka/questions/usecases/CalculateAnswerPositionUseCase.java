@@ -60,12 +60,19 @@ public class CalculateAnswerPositionUseCase implements Function<AnswerDTO, Mono<
 //                    ));
 
 
-            return getAnswerUseCase.apply(answerDTO.getId())
-                    .map(answerDTO2 -> {
-                        answerDTO2.setPosition(answerDTO2.getPlusVotes().size()
-                                - answerDTO2.getSubtractVotes().size());
-                        return updateAnswerUseCase.apply(answerDTO2);
-                    }).then();
+//            return getAnswerUseCase.apply(answerDTO.getId())
+//                    .map(answerDTO2 -> {
+//                        answerDTO2.setPosition(answerDTO2.getPlusVotes().size()
+//                                - answerDTO2.getSubtractVotes().size());
+//                        return updateAnswerUseCase.apply(answerDTO2);
+//                    }).then();
+
+    return getAnswerUseCase.apply(answerDTO.getId())
+            .flatMap((originalAnswerDTO) ->{
+                answerDTO.setPosition(answerDTO.getPlusVotes().size()
+                        - answerDTO.getSubtractVotes().size());
+                return answerRepository.save(mapperUtils.mapperToAnswer().apply(answerDTO));})
+            .map(mapperUtils.mapEntityToAnswer()).then();
 
 //            return getQuestionsUseCase.apply(questionId).map(QuestionDTO::getAnswers)
 //                    .flatMapMany(Flux::fromIterable)
