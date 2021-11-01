@@ -20,10 +20,10 @@ const SingleQuestionPage = ({
   history
 }) => {
   const { id } = match.params
-  
+
   useEffect(() => {
     dispatch(fetchQuestion(id))
-  }, [dispatch, id, question,question.answer])
+  }, [dispatch, id, question, question.answer])
 
   const onDelete = (id) => {
     swal({
@@ -50,33 +50,33 @@ const SingleQuestionPage = ({
         icon: "warning",
         buttons: ["Cancel", "Confirm"]
       })
-      .then((response)=>{        
-        if(response){
-          return history.push('/new/');
-        }
-      })
+        .then((response) => {
+          if (response) {
+            return history.push('/new/');
+          }
+        })
 
   }
 
-  const onPlus = (answer) =>{
+  const onPlus = (answer) => {
     console.log(answer)
     deleteVoteByUserIdInQuestion(answer)
     dispatch(plusAnswerVote(answer))
-  
+
   }
 
-  const onSubtract = (answer) =>{
+  const onSubtract = (answer) => {
     console.log(answer)
     deleteVoteByUserIdInQuestion(answer)
     dispatch(subtractAnswerVote(answer))
   }
 
-  const deleteVoteByUserIdInQuestion=(answer)=>{
+  const deleteVoteByUserIdInQuestion = (answer) => {
     dispatch(deleteVote(answer))
   }
 
-  
-  
+
+
 
   const renderQuestion = () => {
     if (loading.question) return <p>Loading question...</p>
@@ -89,12 +89,12 @@ const SingleQuestionPage = ({
 
   const renderAnswers = () => {
     return (question.answers && question.answers.length) ? question.answers
-    .sort(function(a, b){return b.position-a.position})
-    
-    .map(answer => (
-      <Answer key={answer.id} answer={answer} uid={userId} onDelete={onDelete}
-      onPlus={onPlus} onSustract={onSubtract} />
-    )) : <p>Empty answer!</p>;
+      .sort(function (a, b) { return b.position - a.position })
+
+      .map(answer => (
+        <Answer key={answer.id} answer={answer} uid={userId} onDelete={onDelete}
+          onPlus={onPlus} onSustract={onSubtract} />
+      )) : <p>Empty answer!</p>;
   }
 
   return (
@@ -103,17 +103,14 @@ const SingleQuestionPage = ({
       {userId && <div><Link to={"/answer/" + id} className="button right">
         Reply
       </Link>
-      {question.userId===userId&&<div>
-        {
-        (question.answers && question.answers.length) ? 
-        <button className="button right" onClick={onEdit}>Edit</button>
-          : <Link to={"/questionEdit/" + id} className="button right">Edit</Link>
-        }
+        {question.userId === userId && <div>
+          {
+            (question.answers && question.answers.length) ?
+              <button className="button right" onClick={onEdit}>Edit</button>
+              : <Link to={"/questionEdit/" + id} className="button right">Edit</Link>
+          }
         </div>
-}
-          
-          
-      
+        }
       </div>}
 
       <h2>Answers</h2>

@@ -1,17 +1,13 @@
 import React from "react";
 import { Question } from "./Question";
-import { useEffect } from "react";
 import { useState } from "react";
 
 
 
-export const Pager= ({questions,loading,hasErrors})=>{
+export const Pager= ({questions,loading,hasErrors,onDelete})=>{
 
-    useEffect(() => {
-        paginatorProps=paginator(questions,currentPage,10)
-        renderQuestions(paginatorProps.data)
-        console.log("useEffect")
-      }, [currentPage])
+    const [currentPage, setCurrentPage]=useState(1)
+    let paginatorProps=paginator(questions,currentPage,10)
 
     function paginator(items, current_page, per_page_items) {
         let page = current_page || 1,
@@ -32,10 +28,6 @@ export const Pager= ({questions,loading,hasErrors})=>{
         };
     }
 
-    const [currentPage, setCurrentPage]=useState(1)
-    let paginatorProps=paginator(questions,currentPage,10)
-
-
     const prevPage=()=>{
         setCurrentPage(currentPage-1);
     }
@@ -49,7 +41,7 @@ export const Pager= ({questions,loading,hasErrors})=>{
         if (loading) return <p>Loading questions...</p>
         if (hasErrors) return <p>Unable to display questions.</p>
 
-        return data.map(question => <Question key={question.id} question={question} excerpt />)
+        return data.map(question => <Question key={question.id} question={question} excerpt onDelete={onDelete} />)
     }
 
     return (<>

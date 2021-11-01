@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
-//import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import {  fetchQuestion, postAnswer, sendMail } from '../actions/questionActions'
 import { connect } from 'react-redux'
 import { Question } from '../components/Question'
 import { Input } from "../components/Input";
 
-const FormPage = ({ dispatch, loading, redirect, match,hasErrors, question, userId, userEmail, pathname }) => {
+const FormPage = ({ dispatch, loading, redirect, match,hasErrors, question, userId, userEmail }) => {
     const [content, setContent]=useState('');
-    //const { register, handleSubmit } = useForm();
     const { id } = match.params
     const history = useHistory();
     const mail =({});
@@ -32,8 +30,7 @@ const FormPage = ({ dispatch, loading, redirect, match,hasErrors, question, user
             dispatch(postAnswer(data));
             prepareMail({userEmail,question,mail,data});
         } 
-    }
-  
+    }  
         
     const prepareMail = ({userEmail,question,mail,data}) =>{
         mail.toEmail=userEmail;
@@ -59,7 +56,6 @@ const FormPage = ({ dispatch, loading, redirect, match,hasErrors, question, user
 
         return <Question question={question} />
     }
-
 
     return (
         <section>

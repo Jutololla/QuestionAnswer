@@ -2,7 +2,8 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import swal from 'sweetalert'
 import { fetchOwnerQuestions, deleteQuestion } from '../actions/questionActions'
-import { Question } from '../components/Question'
+import { Pager } from '../components/Pager'
+
 
 const OwnerQuestionsPage = ({ dispatch, loading, questions, hasErrors, redirect, userId }) => {
     useEffect(() => {
@@ -32,18 +33,11 @@ const OwnerQuestionsPage = ({ dispatch, loading, questions, hasErrors, redirect,
         
     }
 
-    
-
-
     const renderQuestions = () => {
         if (loading) return <p>Loading questions...</p>
         if (hasErrors) return <p>Unable to display questions.</p>
 
-        return questions.map(question => <Question
-            key={question.id}
-            question={question}
-            excerpt onDelete={onDelete}
-             />)
+        return <Pager questions={questions} excerpt onDelete={onDelete}></Pager>
     }
 
     return (

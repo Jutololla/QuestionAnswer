@@ -12,7 +12,6 @@ const HomePage = ({children}) => (
       View Questions
     </Link>
     <hr/>
-  
   </section>
 )
 export default HomePage

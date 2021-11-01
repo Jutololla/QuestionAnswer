@@ -18,15 +18,9 @@ const FormPage = ({ dispatch, loading, redirect, userId }) => {
     }
     const [content, setContent] = useState('');
 
-    //const { register, handleSubmit } = useForm();
     const history = useHistory();
 
-   /* const onSubmit = data => {
-        data.userId = userId;
-        dispatch(postQuestion(data));
-    };*/
-
-    const onSubmit = e => {
+  const onSubmit = e => {
         e.preventDefault();
         const data = {...formState,
             userId,
@@ -47,7 +41,6 @@ const FormPage = ({ dispatch, loading, redirect, userId }) => {
             [target.name]:target.value
         });
     }
-
 
     return (
         <section>
