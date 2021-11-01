@@ -19,9 +19,7 @@ public class QuestionDTO {
     private String category;
     private List<AnswerDTO> answers;
 
-
     public QuestionDTO() {
-
     }
 
     public QuestionDTO(String userId, String question, String type, String category) {

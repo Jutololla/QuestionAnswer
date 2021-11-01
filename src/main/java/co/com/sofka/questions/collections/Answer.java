@@ -53,9 +53,7 @@ public class Answer {
         } while (opt);
     }
 
-//    public boolean contains(String idVotes){return this.votes.contains(idVotes);}
-
-    public Integer getPosition() {
+  public Integer getPosition() {
         return position;
     }
 

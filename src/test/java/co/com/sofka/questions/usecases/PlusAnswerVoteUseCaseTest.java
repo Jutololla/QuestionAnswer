@@ -9,7 +9,6 @@ import static org.mockito.Mockito.mock;
 class PlusAnswerVoteUseCaseTest {
 //    AnswerRepository answerRepository;
 //    PlusAnswerVoteUseCase plusAnswerVoteUseCase;
-//    VoteRepository voteRepository;
 //
 //    @BeforeEach
 //    public void setup(){

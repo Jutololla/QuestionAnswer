@@ -15,38 +15,18 @@ import java.util.function.Function;
 @Component
 public class MapperUtils {
 
-    @Autowired
-    AnswerRepository answerRepository;
-    UpdateAnswerUseCase updateAnswerUseCase;
-
     public Function<AnswerDTO, Answer> mapperToAnswer() {
-//        return updateAnswer -> {
-//            var answer = new Answer();
-//            answer.setPosition(updateAnswer.getPosition());
-//            answer.setQuestionId(updateAnswer.getQuestionId());
-//            answer.setUserId(updateAnswer.getUserId());
-//            answer.setAnswer(updateAnswer.getAnswer());
-//            answer.setId(updateAnswer.getId());
-//            return answer;
-//        };
         return updateAnswer -> {
             Answer answer = new Answer();
-            BeanUtils.copyProperties(updateAnswer,answer);
+            BeanUtils.copyProperties(updateAnswer, answer);
             return answer;
-    };
+        };
     }
 
-    public Function<QuestionDTO, Question> mapperToQuestion(String id) {
+    public Function<QuestionDTO, Question> mapperToQuestion() {
         return updateQuestion -> {
             Question question = new Question();
-            BeanUtils.copyProperties(updateQuestion,question);
-
-//            question.setId(id);
-//            question.setUserId(updateQuestion.getUserId());
-//            question.setCategory(updateQuestion.getCategory());
-//            question.setQuestion(updateQuestion.getQuestion());
-//            question.setUserId(updateQuestion.getUserId());
-//            question.setType(updateQuestion.getType());
+            BeanUtils.copyProperties(updateQuestion, question);
             return question;
         };
     }
@@ -54,38 +34,29 @@ public class MapperUtils {
     public Function<Question, QuestionDTO> mapEntityToQuestion() {
         return entity -> {
             QuestionDTO questionDTO = new QuestionDTO();
-//                entity.getId(),
-//                entity.getUserId(),
-//                entity.getQuestion(),
-//                entity.getType(),
-//                entity.getCategory()
             BeanUtils.copyProperties(entity, questionDTO);
             return questionDTO;
         };
-            }
+    }
 
     public Function<Answer, AnswerDTO> mapEntityToAnswer() {
         return entity -> {
             AnswerDTO answerDTO = new AnswerDTO();
-//                    entity.getId(),
-//                    entity.getUserId(),
-//                    entity.getQuestionId(),
-//                    entity.getAnswer(),
-//                    entity.getPosition()
             BeanUtils.copyProperties(entity, answerDTO);
             return answerDTO;
-        };}
+        };
+    }
 
-    public Function<Answer,Answer> setPosition(){
+    public Function<Answer, Answer> setPosition() {
         return answer -> {
             Answer answerToReturn = new Answer();
-            BeanUtils.copyProperties(answer,answerToReturn);
-            answerToReturn.setPosition(answerToReturn.getPlusVotes().size()-answerToReturn.getSubtractVotes().size());
+            BeanUtils.copyProperties(answer, answerToReturn);
+            answerToReturn.setPosition(answerToReturn.getPlusVotes().size() - answerToReturn.getSubtractVotes().size());
             return answerToReturn;
         };
     }
 
 
-    }
+}
 
 

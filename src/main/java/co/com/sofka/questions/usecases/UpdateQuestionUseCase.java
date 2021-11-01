@@ -27,7 +27,7 @@ public class UpdateQuestionUseCase implements SaveQuestion {
     public Mono<String> apply(QuestionDTO dto) {
         Objects.requireNonNull(dto.getId(), "Id of the question is required");
         return questionRepository
-                .save(mapperUtils.mapperToQuestion(null).apply(dto))
+                .save(mapperUtils.mapperToQuestion().apply(dto))
                 .map(Question::getId);
     }
 

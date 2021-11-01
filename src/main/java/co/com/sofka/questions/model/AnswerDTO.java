@@ -21,8 +21,8 @@ public class AnswerDTO {
     private ArrayList<String> subtractVotes;
 
     public AnswerDTO() {
-        this.plusVotes=new ArrayList<>();
-        this.subtractVotes=new ArrayList<>();
+        this.plusVotes = new ArrayList<>();
+        this.subtractVotes = new ArrayList<>();
     }
 
     public AnswerDTO(String id, String userId, String questionId, String answer, Integer position) {
@@ -46,19 +46,14 @@ public class AnswerDTO {
             opt = this.subtractVotes.remove(userId);
         } while (opt);
     }
-    public void addUpVote(String userId)
-    {
+
+    public void addUpVote(String userId) {
         this.plusVotes.add(userId);
     }
 
-
-
-    public void addDownVote(String userId)
-    {
+    public void addDownVote(String userId) {
         this.subtractVotes.add(userId);
     }
-
-
 
     public ArrayList<String> getPlusVotes() {
         return plusVotes;
