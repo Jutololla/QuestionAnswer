@@ -38,7 +38,7 @@ public class PlusAnswerVoteUseCase {
                     BeanUtils.copyProperties(originalAnswerDTO,answerDTO);
                     answerDTO.addUpVote(answerDTO.getUserId());
                     return answerRepository.save(mapperUtils.mapperToAnswer().apply(answerDTO));})
-                .map(mapperUtils.mapEntityToAnswer()).then(calculateAnswerPositionUseCase.apply(answerDTO)));
+                .map(mapperUtils.mapEntityToAnswer()).then());
 
 
     }

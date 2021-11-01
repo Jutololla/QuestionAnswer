@@ -76,6 +76,15 @@ public class MapperUtils {
             return answerDTO;
         };}
 
+    public Function<Answer,Answer> setPosition(){
+        return answer -> {
+            Answer answerToReturn = new Answer();
+            BeanUtils.copyProperties(answer,answerToReturn);
+            answerToReturn.setPosition(answerToReturn.getPlusVotes().size()-answerToReturn.getSubtractVotes().size());
+            return answerToReturn;
+        };
+    }
+
 
     }
 

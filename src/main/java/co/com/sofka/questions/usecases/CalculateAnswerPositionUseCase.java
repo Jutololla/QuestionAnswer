@@ -11,7 +11,7 @@ import java.util.function.Function;
 
 @Service
 @Validated
-public class CalculateAnswerPositionUseCase implements Function<AnswerDTO, Mono<Void>> {
+public class CalculateAnswerPositionUseCase implements Function<AnswerDTO, Mono<AnswerDTO>> {
     private final UpdateAnswerUseCase updateAnswerUseCase;
     private final GetAnswerUseCase getAnswerUseCase;
     private final MapperUtils mapperUtils;
@@ -26,7 +26,7 @@ public class CalculateAnswerPositionUseCase implements Function<AnswerDTO, Mono<
 
 
 @Override
-    public Mono<Void> apply(AnswerDTO answerDTO) {
+    public Mono<AnswerDTO> apply(AnswerDTO answerDTO) {
 
 
 
@@ -35,7 +35,7 @@ public class CalculateAnswerPositionUseCase implements Function<AnswerDTO, Mono<
                 answerDTO.setPosition(answerDTO.getPlusVotes().size()
                         - answerDTO.getSubtractVotes().size());
                 return answerRepository.save(mapperUtils.mapperToAnswer().apply(answerDTO));})
-            .map(mapperUtils.mapEntityToAnswer()).then();
+            .map(mapperUtils.mapEntityToAnswer());
 
         }
 

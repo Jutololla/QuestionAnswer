@@ -36,6 +36,7 @@ public class GetQuestionsUseCase implements Function<String, Mono<QuestionDTO>> 
         return questionDTO ->
                 Mono.just(questionDTO).zipWith(
                         answerRepository.findAllByQuestionId(questionDTO.getId())
+                                .map(mapperUtils.setPosition())
                                 .map(mapperUtils.mapEntityToAnswer())
                                 .collectList(),
                         (question, answers) -> {

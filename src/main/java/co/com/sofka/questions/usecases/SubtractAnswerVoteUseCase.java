@@ -40,7 +40,7 @@ public class SubtractAnswerVoteUseCase {
                         BeanUtils.copyProperties(originalAnswerDTO,answerDTO);
                             answerDTO.addDownVote(answerDTO.getUserId());
                             return answerRepository.save(mapperUtils.mapperToAnswer().apply(answerDTO));})
-                    .map(mapperUtils.mapEntityToAnswer()).then(calculateAnswerPositionUseCase.apply(answerDTO)));
+                    .map(mapperUtils.mapEntityToAnswer())).then();
 
         }
 
