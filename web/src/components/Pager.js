@@ -1,6 +1,7 @@
 import React from "react";
 import { Question } from "./Question";
 import { useEffect } from "react";
+import { useState } from "react";
 
 
 
@@ -31,19 +32,16 @@ export const Pager= ({questions,loading,hasErrors})=>{
         };
     }
 
-    let currentPage=1;
+    const [currentPage, setCurrentPage]=useState(1)
     let paginatorProps=paginator(questions,currentPage,10)
 
 
     const prevPage=()=>{
-        currentPage=currentPage-1;
-        console.log(currentPage)
-
+        setCurrentPage(currentPage-1);
     }
  
     const nextPage=()=>{
-        currentPage=currentPage+1;
-        console.log(currentPage)
+        setCurrentPage(currentPage+1);
 
     }
  
