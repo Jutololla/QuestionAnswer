@@ -184,11 +184,54 @@ export function updateQuestion(question) {
     }
 }
 
-export function updateAnswer(answer) {
+export function plusAnswerVote(answer) {
     return async dispatch => {
         dispatch(loading())
         try {
-            await fetch(`${URL_BASE}/updateanswer`,
+            await fetch(`${URL_BASE}/updateanswervoteplus`,
+                {
+                    method: 'PUT',
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(answer)
+                }
+            )
+            dispatch(success({redirect: `/question/${answer.id}`}));
+        } catch (error) {
+            dispatch(failure())
+        }
+    }
+}
+
+export function subtractAnswerVote(answer) {
+    return async dispatch => {
+        dispatch(loading())
+        try {
+            await fetch(`${URL_BASE}/updateanswervotesubtract`,
+                {
+                    method: 'PUT',
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(answer)
+                }
+            )
+            dispatch(success({redirect: `/question/${answer.id}`}));
+        } catch (error) {
+            dispatch(failure())
+        }
+    }
+}
+
+export function deleteVote(answer) {
+    return async dispatch => {
+        dispatch(loading())
+        try {
+            console.log(answer)
+            await fetch(`${URL_BASE}/deletevote`,
                 {
                     method: 'PUT',
                     mode: 'cors',

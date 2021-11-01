@@ -6,8 +6,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import reactor.core.publisher.Mono;
 
-import java.io.IOException;
-
 @Service
 @Validated
 public class SendEmailUseCase {

@@ -3,6 +3,8 @@ package co.com.sofka.questions.collections;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
+
 @Document
 public class Answer {
     @Id
@@ -11,8 +13,12 @@ public class Answer {
     private String questionId;
     private String answer;
     private Integer position;
+    private ArrayList<String> plusVotes;
+    private ArrayList<String> subtractVotes;
 
     public Answer() {
+        this.plusVotes = new ArrayList<>();
+        this.subtractVotes = new ArrayList<>();
     }
 
     public Answer(String id, String userId, String questionId, String answer, Integer position) {
@@ -21,9 +27,33 @@ public class Answer {
         this.questionId = questionId;
         this.answer = answer;
         this.position = position;
+        this.plusVotes = new ArrayList<>();
+        this.subtractVotes = new ArrayList<>();
     }
 
-    public Integer getPosition() {
+    public void addUpVote(String userId) {
+        this.plusVotes.add(userId);
+    }
+
+    public void addDownVote(String userId) {
+        this.subtractVotes.add(userId);
+    }
+
+    public void removeUpVote(String userId) {
+        boolean opt;
+        do {
+            opt = this.plusVotes.remove(userId);
+        } while (opt);
+    }
+
+    public void removeDownVote(String userId) {
+        boolean opt;
+        do {
+            opt = this.subtractVotes.remove(userId);
+        } while (opt);
+    }
+
+  public Integer getPosition() {
         return position;
     }
 
@@ -62,4 +92,21 @@ public class Answer {
     public void setAnswer(String answer) {
         this.answer = answer;
     }
+
+    public ArrayList<String> getPlusVotes() {
+        return plusVotes;
+    }
+
+    public void setPlusVotes(ArrayList<String> plusVotes) {
+        this.plusVotes = plusVotes;
+    }
+
+    public ArrayList<String> getSubtractVotes() {
+        return subtractVotes;
+    }
+
+    public void setSubtractVotes(ArrayList<String> subtractVotes) {
+        this.subtractVotes = subtractVotes;
+    }
+
 }

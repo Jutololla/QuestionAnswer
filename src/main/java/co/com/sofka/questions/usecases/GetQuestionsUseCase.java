@@ -2,8 +2,8 @@ package co.com.sofka.questions.usecases;
 
 import co.com.sofka.questions.mapper.MapperUtils;
 import co.com.sofka.questions.model.QuestionDTO;
-import co.com.sofka.questions.reposioties.AnswerRepository;
-import co.com.sofka.questions.reposioties.QuestionRepository;
+import co.com.sofka.questions.repositories.AnswerRepository;
+import co.com.sofka.questions.repositories.QuestionRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import reactor.core.publisher.Mono;
@@ -36,6 +36,7 @@ public class GetQuestionsUseCase implements Function<String, Mono<QuestionDTO>> 
         return questionDTO ->
                 Mono.just(questionDTO).zipWith(
                         answerRepository.findAllByQuestionId(questionDTO.getId())
+                                .map(mapperUtils.setPosition())
                                 .map(mapperUtils.mapEntityToAnswer())
                                 .collectList(),
                         (question, answers) -> {

@@ -1,4 +1,4 @@
-package co.com.sofka.questions.reposioties;
+package co.com.sofka.questions.repositories;
 
 import co.com.sofka.questions.collections.Answer;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
@@ -11,5 +11,9 @@ import reactor.core.publisher.Mono;
 public interface AnswerRepository extends ReactiveCrudRepository<Answer, String> {
     Flux<Answer> findAllByQuestionId(String id);
 
+    Flux<Answer> findByQuestionId(String questionId);
+
     Mono<Void> deleteByQuestionId(String questionId);
+
+    Flux<Answer> findByUserIdAndQuestionId(String userId, String questionId);
 }

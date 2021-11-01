@@ -3,7 +3,7 @@ package co.com.sofka.questions.usecases;
 import co.com.sofka.questions.collections.Question;
 import co.com.sofka.questions.mapper.MapperUtils;
 import co.com.sofka.questions.model.QuestionDTO;
-import co.com.sofka.questions.reposioties.QuestionRepository;
+import co.com.sofka.questions.repositories.QuestionRepository;
 import co.com.sofka.questions.usecases.usecasesinterfaces.SaveQuestion;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -23,7 +23,7 @@ public class CreateQuestionUseCase implements SaveQuestion {
     @Override
     public Mono<String> apply(QuestionDTO newQuestion) {
         return questionRepository
-                .save(mapperUtils.mapperToQuestion(null).apply(newQuestion))
+                .save(mapperUtils.mapperToQuestion().apply(newQuestion))
                 .map(Question::getId);
     }
 

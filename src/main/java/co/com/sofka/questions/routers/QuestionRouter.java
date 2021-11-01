@@ -67,6 +67,45 @@ public class QuestionRouter {
     }
 
     @Bean
+    public RouterFunction<ServerResponse> plusAnswerVote(PlusAnswerVoteUseCase plusAnswerVoteUseCase) {
+        return route(
+                PUT("/updateanswervoteplus").and(accept(MediaType.APPLICATION_JSON)),
+                request -> request.bodyToMono(AnswerDTO.class)
+                        .flatMap(answerDTO -> plusAnswerVoteUseCase.apply(answerDTO)
+                                .flatMap(result->ServerResponse.ok()
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .bodyValue(result))
+                        ));
+    }
+
+    @Bean
+    public RouterFunction<ServerResponse> deleteVoteByUserId(DeleteVoteUseCase deleteVoteUseCase) {
+        return route(
+                PUT("/deletevote").and(accept(MediaType.APPLICATION_JSON)),
+                request -> request.bodyToMono(AnswerDTO.class)
+                        .flatMap(answerDTO -> deleteVoteUseCase.apply(answerDTO)
+                                .flatMap(result->ServerResponse.ok()
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .bodyValue(result))
+                        ));
+
+
+
+    }
+
+    @Bean
+    public RouterFunction<ServerResponse> subtractAnswerVote(SubtractAnswerVoteUseCase subtractAnswerVoteUseCase) {
+        return route(
+                PUT("/updateanswervotesubtract").and(accept(MediaType.APPLICATION_JSON)),
+                request -> request.bodyToMono(AnswerDTO.class)
+                        .flatMap(answerDTO -> subtractAnswerVoteUseCase.apply(answerDTO)
+                                .flatMap(result->ServerResponse.ok()
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .bodyValue(result))
+                        ));
+    }
+
+    @Bean
     public RouterFunction<ServerResponse> create(CreateQuestionUseCase createQuestionUseCase) {
         Function<QuestionDTO, Mono<ServerResponse>> executor = questionDTO -> createQuestionUseCase.apply(questionDTO)
                 .flatMap(result -> ServerResponse.ok()

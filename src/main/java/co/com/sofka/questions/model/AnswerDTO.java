@@ -2,6 +2,7 @@ package co.com.sofka.questions.model;
 
 
 import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -16,10 +17,12 @@ public class AnswerDTO {
     private String answer;
 
     private Integer position;
-
+    private ArrayList<String> plusVotes;
+    private ArrayList<String> subtractVotes;
 
     public AnswerDTO() {
-
+        this.plusVotes = new ArrayList<>();
+        this.subtractVotes = new ArrayList<>();
     }
 
     public AnswerDTO(String id, String userId, String questionId, String answer, Integer position) {
@@ -29,13 +32,44 @@ public class AnswerDTO {
         this.answer = answer;
         this.position = position;
     }
-//    public AnswerDTO(@NotBlank String questionId, @NotBlank String userId, @NotBlank String answer, @NotBlank String id) {
-//        this.userId = userId;
-//        this.questionId = questionId;
-//        this.answer = answer;
-//        this.id=id;
-//    }
 
+    public void removeUpVote(String userId) {
+        boolean opt;
+        do {
+            opt = this.plusVotes.remove(userId);
+        } while (opt);
+    }
+
+    public void removeDownVote(String userId) {
+        boolean opt;
+        do {
+            opt = this.subtractVotes.remove(userId);
+        } while (opt);
+    }
+
+    public void addUpVote(String userId) {
+        this.plusVotes.add(userId);
+    }
+
+    public void addDownVote(String userId) {
+        this.subtractVotes.add(userId);
+    }
+
+    public ArrayList<String> getPlusVotes() {
+        return plusVotes;
+    }
+
+    public void setPlusVotes(ArrayList<String> plusVotes) {
+        this.plusVotes = plusVotes;
+    }
+
+    public ArrayList<String> getSubtractVotes() {
+        return subtractVotes;
+    }
+
+    public void setSubtractVotes(ArrayList<String> subtractVotes) {
+        this.subtractVotes = subtractVotes;
+    }
 
     public String getId() {
         return id;

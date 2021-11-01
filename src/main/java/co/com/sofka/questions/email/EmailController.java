@@ -17,12 +17,12 @@ import java.nio.charset.StandardCharsets;
 
 public class EmailController {
 
-    public String sendMail(String toEmail, String toName, String question, String questionPath){
-        String text =readFileToString("email.html");
-        text=text.replace("QUESTION",question);
+    public String sendMail(String toEmail, String toName, String question, String questionPath) {
+        String text = readFileToString("email.html");
+        text = text.replace("QUESTION", question);
 //        String questionLink = "https://questionanswer-e95e5.web.app".concat(questionPath);
         String questionLink = "http://localhost:3000".concat(questionPath);
-        text=text.replace("LINKTOWEBPAGE",questionLink);
+        text = text.replace("LINKTOWEBPAGE", questionLink);
 
 
         Email email = EmailBuilder.startingBlank()

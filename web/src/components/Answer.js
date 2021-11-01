@@ -10,8 +10,13 @@ return <aside className="answer">
     key={answer.id}
     onClick={() => onDelete(answer.id)}
   >Delete</Button>}
+
+{uid&&<>
    <Button onClick={() => onPlus(answer)}>+1</Button>
   <Button onClick={() => onSustract(answer)}>-1</Button>
+  </>
+}
+
   <>   {answer.position}</>
 
 
