@@ -28,7 +28,7 @@ public class GetQuestionsUseCase implements Function<String, Mono<QuestionDTO>> 
     public Mono<QuestionDTO> apply(String id) {
         Objects.requireNonNull(id, "Id is required");
         return questionRepository.findById(id)
-                .map(mapperUtils.mapEntityToQuestion())
+                .map(mapperUtils.mapperToQuestionDTO())
                 .flatMap(mapQuestionAggregate());
     }
 
@@ -37,7 +37,7 @@ public class GetQuestionsUseCase implements Function<String, Mono<QuestionDTO>> 
                 Mono.just(questionDTO).zipWith(
                         answerRepository.findAllByQuestionId(questionDTO.getId())
                                 .map(mapperUtils.setPosition())
-                                .map(mapperUtils.mapEntityToAnswer())
+                                .map(mapperUtils.mapperToAnswerDTO())
                                 .collectList(),
                         (question, answers) -> {
                             question.setAnswers(answers);

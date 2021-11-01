@@ -34,7 +34,7 @@ public class PlusAnswerVoteUseCase {
                     answerDTO.addUpVote(answerDTO.getUserId());
                     return answerRepository.save(mapperUtils.mapperToAnswer().apply(answerDTO));
                 })
-                .map(mapperUtils.mapEntityToAnswer()).then());
+                .map(mapperUtils.mapperToAnswerDTO()).then());
     }
 }
 

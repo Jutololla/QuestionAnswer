@@ -26,12 +26,9 @@ public class DeleteVoteUseCase implements Function<AnswerDTO, Mono<Void>> {
     @Override
     public Mono<Void> apply(AnswerDTO answerDTO){
         return answerRepository.findByQuestionId(answerDTO.getQuestionId())
-                .flatMap(originalAnswer -> {
-                    System.out.println("originalAnswer.getPlusVotes() = " + originalAnswer.getPlusVotes());
-                    System.out.println("originalAnswer.getSubtractVotes() = " + originalAnswer.getSubtractVotes());
-                    originalAnswer.removeUpVote(answerDTO.getUserId());
+                .flatMap(originalAnswer -> {originalAnswer.removeUpVote(answerDTO.getUserId());
                     originalAnswer.removeDownVote(answerDTO.getUserId());
-                    return updateAnswerUseCase.apply(mapperUtils.mapEntityToAnswer().apply(originalAnswer));
+                    return updateAnswerUseCase.apply(mapperUtils.mapperToAnswerDTO().apply(originalAnswer));
                 }).then();
     }
 

@@ -23,6 +23,6 @@ public class GetAnswerUseCase implements Function<String, Mono<AnswerDTO>> {
     @Override
     public Mono<AnswerDTO> apply(String answerId){
         return answerRepository.findById(answerId)
-                .map(mapperUtils.mapEntityToAnswer());
+                .map(mapperUtils.mapperToAnswerDTO());
     }
 }

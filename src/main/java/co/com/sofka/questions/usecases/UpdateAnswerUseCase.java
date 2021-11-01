@@ -28,6 +28,6 @@ public class UpdateAnswerUseCase implements Function<AnswerDTO, Mono<AnswerDTO>>
         return getAnswerUseCase.apply(answerDTO.getId())
                 .flatMap((originalAnswerDTO) ->
                         answerRepository.save(mapperUtils.mapperToAnswer().apply(answerDTO)))
-                .map(mapperUtils.mapEntityToAnswer());
+                .map(mapperUtils.mapperToAnswerDTO());
     }
 }

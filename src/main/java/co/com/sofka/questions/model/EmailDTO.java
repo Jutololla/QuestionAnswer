@@ -13,6 +13,10 @@ public class EmailDTO {
         this.questionLink = questionPath;
     }
 
+    public EmailDTO() {
+
+    }
+
     public String getToEmail() {
         return toEmail;
     }

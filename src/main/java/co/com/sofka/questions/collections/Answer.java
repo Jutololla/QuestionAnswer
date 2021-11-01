@@ -31,6 +31,7 @@ public class Answer {
         this.subtractVotes = new ArrayList<>();
     }
 
+
     public void addUpVote(String userId) {
         this.plusVotes.add(userId);
     }

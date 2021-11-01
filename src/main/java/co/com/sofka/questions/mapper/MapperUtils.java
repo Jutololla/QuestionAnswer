@@ -3,9 +3,11 @@ package co.com.sofka.questions.mapper;
 import co.com.sofka.questions.collections.Answer;
 import co.com.sofka.questions.collections.Question;
 import co.com.sofka.questions.model.AnswerDTO;
+import co.com.sofka.questions.model.EmailDTO;
 import co.com.sofka.questions.model.QuestionDTO;
 import co.com.sofka.questions.repositories.AnswerRepository;
 import co.com.sofka.questions.usecases.UpdateAnswerUseCase;
+import org.simplejavamail.api.email.Email;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -31,7 +33,7 @@ public class MapperUtils {
         };
     }
 
-    public Function<Question, QuestionDTO> mapEntityToQuestion() {
+    public Function<Question, QuestionDTO> mapperToQuestionDTO() {
         return entity -> {
             QuestionDTO questionDTO = new QuestionDTO();
             BeanUtils.copyProperties(entity, questionDTO);
@@ -39,7 +41,7 @@ public class MapperUtils {
         };
     }
 
-    public Function<Answer, AnswerDTO> mapEntityToAnswer() {
+    public Function<Answer, AnswerDTO> mapperToAnswerDTO() {
         return entity -> {
             AnswerDTO answerDTO = new AnswerDTO();
             BeanUtils.copyProperties(entity, answerDTO);

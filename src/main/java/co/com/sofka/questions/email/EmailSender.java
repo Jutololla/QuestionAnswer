@@ -15,7 +15,12 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 
-public class EmailController {
+public class EmailSender {
+    Mailer mailer;
+
+    public EmailSender(Mailer mailer) {
+        this.mailer = mailer;
+    }
 
     public String sendMail(String toEmail, String toName, String question, String questionPath) {
         String text = readFileToString("email.html");
@@ -30,21 +35,14 @@ public class EmailController {
                 .to(toName, toEmail)
                 .withSubject("Answer received")
                 .withHTMLText(text)
-
-//                .withPlainText("You've received an answer to your question "+question)
                 .buildEmail();
 
-        Mailer mailer = MailerBuilder
-                .withSMTPServer("smtp.office365.com", 587, "testingservice151526@outlook.com", "Testing15152626")
-                .withTransportStrategy(TransportStrategy.SMTP_TLS)
-                .withSessionTimeout(10 * 1000)
-                .buildMailer();
 
         mailer.sendMail(email);
         return "OK";
     }
 
-    public static String readFileToString(String path) {
+    private static String readFileToString(String path) {
         ResourceLoader resourceLoader = new DefaultResourceLoader();
         Resource resource = resourceLoader.getResource(path);
 

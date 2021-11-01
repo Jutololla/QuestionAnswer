@@ -31,6 +31,8 @@ public class AnswerDTO {
         this.questionId = questionId;
         this.answer = answer;
         this.position = position;
+        this.plusVotes = new ArrayList<>();
+        this.subtractVotes = new ArrayList<>();
     }
 
     public void removeUpVote(String userId) {

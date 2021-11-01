@@ -35,7 +35,7 @@ public class CalculateAnswerPositionUseCase implements Function<AnswerDTO, Mono<
                 answerDTO.setPosition(answerDTO.getPlusVotes().size()
                         - answerDTO.getSubtractVotes().size());
                 return answerRepository.save(mapperUtils.mapperToAnswer().apply(answerDTO));})
-            .map(mapperUtils.mapEntityToAnswer());
+            .map(mapperUtils.mapperToAnswerDTO());
 
         }
 

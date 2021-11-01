@@ -32,6 +32,6 @@ public class SubtractAnswerVoteUseCase {
                     answerDTO.addDownVote(answerDTO.getUserId());
                     return answerRepository.save(mapperUtils.mapperToAnswer().apply(answerDTO));
                 })
-                .map(mapperUtils.mapEntityToAnswer())).then();
+                .map(mapperUtils.mapperToAnswerDTO())).then();
     }
 }
