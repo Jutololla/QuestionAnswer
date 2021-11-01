@@ -20,6 +20,7 @@ const SingleQuestionPage = ({
   history
 }) => {
   const { id } = match.params
+  
   useEffect(() => {
     dispatch(fetchQuestion(id))
   }, [dispatch, id, question,question.answer])
