@@ -1,6 +1,7 @@
 package co.com.sofka.questions.usecases;
 
 import co.com.sofka.questions.mapper.MapperUtils;
+import co.com.sofka.questions.model.AnswerDTO;
 import co.com.sofka.questions.repositories.AnswerRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -10,7 +11,7 @@ import java.util.function.Function;
 
 @Service
 @Validated
-public class DeleteVoteUseCase implements Function<String, Mono<Void>> {
+public class DeleteVoteUseCase implements Function<AnswerDTO, Mono<Void>> {
 
     AnswerRepository answerRepository;
     UpdateAnswerUseCase updateAnswerUseCase;
@@ -23,11 +24,13 @@ public class DeleteVoteUseCase implements Function<String, Mono<Void>> {
     }
 
     @Override
-    public Mono<Void> apply(String userId){
-        return answerRepository.findByQuestionId(userId)
+    public Mono<Void> apply(AnswerDTO answerDTO){
+        return answerRepository.findByQuestionId(answerDTO.getQuestionId())
                 .flatMap(originalAnswer -> {
-                    originalAnswer.removeUpVote(userId);
-                    originalAnswer.removeDownVote(userId);
+                    System.out.println("originalAnswer.getPlusVotes() = " + originalAnswer.getPlusVotes());
+                    System.out.println("originalAnswer.getSubtractVotes() = " + originalAnswer.getSubtractVotes());
+                    originalAnswer.removeUpVote(answerDTO.getUserId());
+                    originalAnswer.removeDownVote(answerDTO.getUserId());
                     return updateAnswerUseCase.apply(mapperUtils.mapEntityToAnswer().apply(originalAnswer));
                 }).then();
     }

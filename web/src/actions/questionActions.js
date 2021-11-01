@@ -226,5 +226,27 @@ export function subtractAnswerVote(answer) {
     }
 }
 
+export function deleteVote(answer) {
+    return async dispatch => {
+        dispatch(loading())
+        try {
+            console.log(answer)
+            await fetch(`${URL_BASE}/deletevote`,
+                {
+                    method: 'PUT',
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(answer)
+                }
+            )
+            dispatch(success({redirect: `/question/${answer.id}`}));
+        } catch (error) {
+            dispatch(failure())
+        }
+    }
+}
+
 
 

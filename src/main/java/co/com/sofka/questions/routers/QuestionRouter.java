@@ -79,6 +79,21 @@ public class QuestionRouter {
     }
 
     @Bean
+    public RouterFunction<ServerResponse> deleteVoteByUserId(DeleteVoteUseCase deleteVoteUseCase) {
+        return route(
+                PUT("/deletevote").and(accept(MediaType.APPLICATION_JSON)),
+                request -> request.bodyToMono(AnswerDTO.class)
+                        .flatMap(answerDTO -> deleteVoteUseCase.apply(answerDTO)
+                                .flatMap(result->ServerResponse.ok()
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .bodyValue(result))
+                        ));
+
+
+
+    }
+
+    @Bean
     public RouterFunction<ServerResponse> subtractAnswerVote(SubtractAnswerVoteUseCase subtractAnswerVoteUseCase) {
         return route(
                 PUT("/updateanswervotesubtract").and(accept(MediaType.APPLICATION_JSON)),

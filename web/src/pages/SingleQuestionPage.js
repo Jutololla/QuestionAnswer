@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import { deleteAnswer, fetchQuestion } from '../actions/questionActions'
+import { deleteAnswer, deleteVote, fetchQuestion } from '../actions/questionActions'
 import { plusAnswerVote } from '../actions/questionActions'
 import { subtractAnswerVote } from '../actions/questionActions'
 import { Question } from '../components/Question'
@@ -22,7 +22,7 @@ const SingleQuestionPage = ({
   const { id } = match.params
   useEffect(() => {
     dispatch(fetchQuestion(id))
-  }, [dispatch, id, question,Answer])
+  }, [dispatch, id, question,question.answer])
 
   const onDelete = (id) => {
     swal({
@@ -59,12 +59,19 @@ const SingleQuestionPage = ({
 
   const onPlus = (answer) =>{
     console.log(answer)
+    deleteVoteByUserIdInQuestion(answer)
     dispatch(plusAnswerVote(answer))
+  
   }
 
   const onSubtract = (answer) =>{
     console.log(answer)
+    deleteVoteByUserIdInQuestion(answer)
     dispatch(subtractAnswerVote(answer))
+  }
+
+  const deleteVoteByUserIdInQuestion=(answer)=>{
+    dispatch(deleteVote(answer))
   }
 
   

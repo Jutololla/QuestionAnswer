@@ -33,25 +33,32 @@ public class AnswerDTO {
         this.position = position;
     }
 
+    public void removeUpVote(String userId) {
+        boolean opt;
+        do {
+            opt = this.plusVotes.remove(userId);
+        } while (opt);
+    }
+
+    public void removeDownVote(String userId) {
+        boolean opt;
+        do {
+            opt = this.subtractVotes.remove(userId);
+        } while (opt);
+    }
     public void addUpVote(String userId)
     {
         this.plusVotes.add(userId);
     }
 
-    public void removeUpVote(String userId)
-    {
-        this.plusVotes.remove(userId);
-    }
+
 
     public void addDownVote(String userId)
     {
         this.subtractVotes.add(userId);
     }
 
-    public void removeDownVote(String userId)
-    {
-        this.subtractVotes.remove(userId);
-    }
+
 
     public ArrayList<String> getPlusVotes() {
         return plusVotes;

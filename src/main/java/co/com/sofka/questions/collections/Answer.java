@@ -17,8 +17,8 @@ public class Answer {
     private ArrayList<String> subtractVotes;
 
     public Answer() {
-        this.plusVotes=new ArrayList<>();
-        this.subtractVotes=new ArrayList<>();
+        this.plusVotes = new ArrayList<>();
+        this.subtractVotes = new ArrayList<>();
     }
 
     public Answer(String id, String userId, String questionId, String answer, Integer position) {
@@ -27,28 +27,30 @@ public class Answer {
         this.questionId = questionId;
         this.answer = answer;
         this.position = position;
-        this.plusVotes=new ArrayList<>();
-        this.subtractVotes=new ArrayList<>();
+        this.plusVotes = new ArrayList<>();
+        this.subtractVotes = new ArrayList<>();
     }
 
-    public void addUpVote(String userId)
-    {
+    public void addUpVote(String userId) {
         this.plusVotes.add(userId);
     }
 
-    public void removeUpVote(String userId)
-    {
-        this.plusVotes.remove(userId);
-    }
-
-    public void addDownVote(String userId)
-    {
+    public void addDownVote(String userId) {
         this.subtractVotes.add(userId);
     }
 
-    public void removeDownVote(String userId)
-    {
-        this.subtractVotes.remove(userId);
+    public void removeUpVote(String userId) {
+        boolean opt;
+        do {
+            opt = this.plusVotes.remove(userId);
+        } while (opt);
+    }
+
+    public void removeDownVote(String userId) {
+        boolean opt;
+        do {
+            opt = this.subtractVotes.remove(userId);
+        } while (opt);
     }
 
 //    public boolean contains(String idVotes){return this.votes.contains(idVotes);}
@@ -108,4 +110,5 @@ public class Answer {
     public void setSubtractVotes(ArrayList<String> subtractVotes) {
         this.subtractVotes = subtractVotes;
     }
+
 }
