@@ -1,4 +1,4 @@
-const URL_BASE = 'https://arcane-brook-80675.herokuapp.com/ ';
+const URL_BASE = 'https://arcane-brook-80675.herokuapp.com';
 
 
 export const LOADING = 'LOADING'
