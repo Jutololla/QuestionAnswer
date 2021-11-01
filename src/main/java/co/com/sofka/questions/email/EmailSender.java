@@ -25,8 +25,8 @@ public class EmailSender {
     public String sendMail(String toEmail, String toName, String question, String questionPath) {
         String text = readFileToString("email.html");
         text = text.replace("QUESTION", question);
-//        String questionLink = "https://questionanswer-e95e5.web.app".concat(questionPath);
-        String questionLink = "http://localhost:3000".concat(questionPath);
+        String questionLink = "https://questionanswer-e95e5.web.app".concat(questionPath);
+//        String questionLink = "http://localhost:3000".concat(questionPath);
         text = text.replace("LINKTOWEBPAGE", questionLink);
 
 
