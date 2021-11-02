@@ -4,12 +4,11 @@ import {
   Switch,
   Route,
   Redirect,
+  Link
 } from 'react-router-dom'
-import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
 import { login, logout } from './actions/authActions';
-
 import { PublicNavbar, PrivateNavbar } from './components/Navbar'
 import HomePage from './pages/HomePage'
 import SingleQuestionPage from './pages/SingleQuestionPage'
@@ -19,29 +18,9 @@ import AnswerFormPage from './pages/AnswerFormPage'
 import OwnerQuestionsPage from './pages/OwnerQuestionsPage'
 import QuestionEditFormPage from './pages/QuestionEditFormPage';
 import { useAuthState } from "react-firebase-hooks/auth";
-//import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-
-
-
-
-
-
-firebase.initializeApp({
-  apiKey: "AIzaSyBes3j4uHIOmwpWz_YdCBb04i_TpDOoHM0",
-  authDomain: "questionanswer-e95e5.firebaseapp.com",
-  projectId: "questionanswer-e95e5",
-  storageBucket: "questionanswer-e95e5.appspot.com",
-  messagingSenderId: "922604461550",
-  appId: "1:922604461550:web:39037df914c710a73f02ff",
-  measurementId: "G-LJC5TFQ4HE"
-});
-
-const auth = firebase.auth();
+import Login from './pages/Login';
+import { auth, GoogleProvider } from './services/FireBaseService';
+import Register from './pages/Register';
 
 const App = ({ dispatch }) => {
   const [user] = useAuthState(auth);
@@ -75,6 +54,8 @@ const App = ({ dispatch }) => {
             <Route exact path="/questions" component={QuestionsPage} />
             <Route exact path="/question/:id" component={SingleQuestionPage} />
             <Route exact path="/answer/:id" component={AnswerFormPage} />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/register" component={Register} />
             <Redirect to="/" />
           </Switch>
         </>
@@ -87,10 +68,15 @@ const App = ({ dispatch }) => {
 
 function SignIn() {
   const signInWithGoogle = () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
+    const provider = GoogleProvider();
     auth.signInWithPopup(provider);
   };
-  return <button className="button right" onClick={signInWithGoogle}>Sign in with google</button>;
+  return <>
+  <button className="button right" onClick={signInWithGoogle}>Sign in with google</button>
+  <Link to="/login" className="button right mx-2" >Sign in</Link >
+  <Link to="/register" className="button right mx-2">Register</Link>
+    
+</>
 }
 
 function SignOut({ dispatch }) {
